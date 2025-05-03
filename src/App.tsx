@@ -38,6 +38,7 @@ import Newsletter from "./components/Newsletter";
 import { useEffect } from "react";
 import AddRecipeForm from "./components/AddRecipe";
 import EditRecipeForm from "./components/EditRecipe";
+import { heroSlides } from "./utils/HeroSlidesData";
 
 function App() {
   const [recipeData, setRecipeData] = useState<RecipeType[]>([]);
@@ -46,7 +47,7 @@ function App() {
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeType | null>(null);
 
-  const slides = [1, 2, 3, 4, 5];
+  // const slides = [1, 2, 3, 4, 5];
   const categories = [
     { image: rice, name: "Rice", bgColor: "#F7F8F4" },
     { image: veggies, name: "Veggies", bgColor: "#FAFDF8" },
@@ -239,10 +240,17 @@ function App() {
             }}
             className="mySwiper"
           >
-            {slides &&
-              slides.map((_, index) => (
+            {heroSlides &&
+              heroSlides.map((slide, index: number) => (
                 <SwiperSlide key={index}>
-                  <HeroSlide />
+                  <HeroSlide
+                    title={slide.title}
+                    description={slide.description}
+                    badges={slide.badges}
+                    user={slide.user}
+                    backgroundImage={slide.backgroundImage}
+                    button={slide.button}
+                  />
                 </SwiperSlide>
               ))}
           </Swiper>
