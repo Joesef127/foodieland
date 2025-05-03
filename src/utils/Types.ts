@@ -1,7 +1,8 @@
 export interface RecipeType {
-  id: number;
-  title: string;
-  image: string;
-  time: string;
-  type: string;
+  id?: number,
+  name: string,
+  time: number,
+  category: string,
+  image: string,
+  isFavorite: boolean,
 }
