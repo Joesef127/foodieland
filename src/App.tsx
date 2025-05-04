@@ -310,6 +310,7 @@ function App() {
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
                     handleToggleFavorite={() => handleToggleFavorite(recipe.id)}
                     customClass="p-2.5"
+                    bgColor="#E7FAFE"
                   />
                 ))}
           </div>

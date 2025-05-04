@@ -10,7 +10,7 @@ import food9 from "../assets/images/food9.png";
 import { RecipeType } from "./Types";
 
 
-export const RecipeData: RecipeType[] = [
+export const Recipes: RecipeType[] = [
   {
     id: 1,
     title: "Big and Juicy Wagyu Beef Cheeseburger",

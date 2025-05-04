@@ -1,17 +1,13 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import "./utils.css";
+import { BadgeProps, ButtonProps, CategoryItemProps, DropdownProps, FormInputProps, HeadingProps, StickyObjectProps, SubHeadingProps } from "./Types";
 
 export const Badge = ({
   icon,
   text,
   fontWeight,
   customClass,
-}: {
-  icon: string;
-  text: string;
-  fontWeight?: string;
-  customClass?: string;
-}) => {
+}: BadgeProps) => {
   return (
     <div
       className={`flex items-center gap-1.5 rounded-full sm:py-2 sm:px-3 py-1.5 px-2.5 w-fit ${customClass}`}
@@ -28,11 +24,7 @@ export const CategoryItem = ({
   image,
   name,
   bgColor,
-}: {
-  image: string;
-  name: string;
-  bgColor: string;
-}) => {
+}: CategoryItemProps) => {
   return (
     <div
       className={`flex flex-col justify-center items-center w-full gap-4 md:gap-6 lg:gap-8 py-5 px-8 rounded-3xl shadow-md`}
@@ -59,14 +51,7 @@ export const Button = ({
   customClass,
   type,
   customFunction,
-}: {
-  text: string;
-  icon?: string;
-  textColor?: string;
-  customClass?: string;
-  type?: "submit" | "reset" | "button";
-  customFunction?: () => void;
-}) => {
+}: ButtonProps) => {
   return (
     <button
       className={`flex justify-center items-center gap-2 text-xs sm:text-xs lg:text-base font-semibold cursor-pointer transition duration-300 py-2 px-3 sm:py-2.5 sm:px-4 md:py-4 md:px-6 lg:py-4 lg:px-8 rounded-xl lg:rounded-2xl shadow-md ${customClass}`}
@@ -83,10 +68,7 @@ export const Button = ({
 export const Heading = ({
   text,
   customClass,
-}: {
-  text: string;
-  customClass?: string;
-}) => {
+}: HeadingProps) => {
   return (
     <h1
       className={`font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl ${customClass}`}
@@ -99,10 +81,7 @@ export const Heading = ({
 export const SubHeading = ({
   text,
   customClass,
-}: {
-  text: string;
-  customClass?: string;
-}) => {
+}: SubHeadingProps) => {
   return (
     <h2
       className={`font-normal text-xs sm:text-sm lg:text-base ${customClass}`}
@@ -115,10 +94,7 @@ export const SubHeading = ({
 export const StickyObject = ({
   image,
   customClass,
-}: {
-  image: string;
-  customClass: string;
-}) => {
+}: StickyObjectProps) => {
   return (
     <span>
       <img
@@ -133,10 +109,7 @@ export const StickyObject = ({
 export const Dropdown = ({
   handleDeleteRecipe,
   handleOpenEditForm,
-}: {
-  handleDeleteRecipe: () => void;
-  handleOpenEditForm?: () => void;
-}) => {
+}: DropdownProps) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -190,3 +163,36 @@ export const LoadingSpinner = () => {
     </div>
   );
 };
+
+export const FormInput = ({
+  type,
+  placeholder,
+  customClass,
+  customFunction,
+  value,
+  name,
+  id,
+  required,
+  label,
+  labelStyle,
+  inputStyle,
+  isTextArea
+}: FormInputProps) => {
+  return (
+    <div className={`grid grid-cols-1 gap-2 ${customClass}`}>
+      <label htmlFor={id} className={labelStyle}>{label}</label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        className={`w-full rounded-md shadow-sm py-4 px-5 text-sm border border-gray-300 bg-transparent focus:border-indigo-500 focus:ring-indigo-500 ${inputStyle}`}
+        onChange={customFunction}
+        value={value}
+        name={name}
+        id={id}
+        required={required}
+      />
+    </div>
+
+
+  )
+}

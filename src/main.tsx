@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import Recipes from "./pages/Recipes.tsx";
+import Contact from "./pages/Contact.tsx" ;
 import NotFound from "./pages/NotFound.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header.tsx";
@@ -15,6 +16,7 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} /> 
       </Routes>
       <Footer />
