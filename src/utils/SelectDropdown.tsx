@@ -28,7 +28,7 @@ export default function SelectDropdown({
           {label}
         </Label>
         <div className="relative mt-2">
-          <ListboxButton className={`flex gap-2.5 justify-between items-center w-full cursor-default rounded-md bg-white text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm py-4 px-3 ${buttonStyle}`}>
+          <ListboxButton className={`flex gap-2.5 justify-between items-center w-full cursor-default rounded bg-white text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 text-xs sm:text-sm py-2 px-1 lg:py-4 lg:px-3 ${buttonStyle}`}>
             {selected.name}
             <ChevronUpDownIcon
               aria-hidden="true"
@@ -44,7 +44,7 @@ export default function SelectDropdown({
               <ListboxOption
                 key={option.id}
                 value={option}
-                className={`group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden ${optionStyle}`}
+                className={`group relative cursor-default text-xs sm:text-sm py-2 lg:pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden ${optionStyle}`}
               >
                 <span>{option.name}</span>
 

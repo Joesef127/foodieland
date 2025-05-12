@@ -1,51 +1,40 @@
 import { useState, useEffect } from "react";
-import { Heading, LoadingSpinner, SubHeading } from "../utils/Utils";
+import { Button, Heading, LoadingSpinner, SubHeading } from "../utils/Utils";
 import RecipeCard from "../components/RecipeCard";
-import Pagination from "../utils/Pagination"; // Import the Pagination component
+import Pagination from "../utils/Pagination";
 import { RecipeType } from "../utils/Types";
 import SelectDropdown from "../utils/SelectDropdown";
+import useRecipe from "../utils/useRecipe";
+import EditRecipeForm from "../components/EditRecipe";
+import AddRecipeForm from "../components/AddRecipe";
 
 export default function Recipes() {
-  const [recipes, setRecipes] = useState<RecipeType[]>([]);
+  const {
+    recipeData,
+    isLoading,
+    error,
+    toggleFavorite,
+    editRecipe,
+    deleteRecipe,
+    addRecipe,
+  } = useRecipe();
+
   const [filteredRecipes, setFilteredRecipes] = useState<RecipeType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedTime, setSelectedTime] = useState<string>("all");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [selectedSearch, setSelectedSearch] = useState<string>("");
+  const [showFavorites, setShowFavorites] = useState<boolean>(false);
 
-  // Pagination state
+  const [showEditForm, setShowEditForm] = useState<boolean>(false);
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<RecipeType | null>(null);
+
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const recipesPerPage = 8; // Number of recipes per page
+  const recipesPerPage = 8;
 
-  // Fetch recipes from the backend
   useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch("http://localhost:8000/recipes");
-        if (!res.ok) {
-          throw new Error("Failed to fetch recipes");
-        }
-        const data: RecipeType[] = await res.json();
-        setRecipes(data);
-        setFilteredRecipes(data); // Initialize filtered recipes
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message || "An error occurred while fetching recipes");
-        } else {
-          setError("An unknown error occurred while fetching recipes");
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchRecipes();
-  }, []);
-
-  // Filter recipes whenever filters change
-  useEffect(() => {
-    const filtered = recipes.filter((recipe) => {
+    const filtered = recipeData.filter((recipe) => {
+      const matchesFavorites = !showFavorites || recipe.isFavorite;
       const matchesCategory =
         selectedCategory === "all" || recipe.category === selectedCategory;
       const matchesTime =
@@ -54,15 +43,25 @@ export default function Recipes() {
         (selectedTime === "<60mins" && recipe.time < 60) ||
         (selectedTime === "<90mins" && recipe.time < 90) ||
         (selectedTime === "<120mins" && recipe.time < 120);
+      const matchesSearch =
+        selectedSearch === "" ||
+        recipe.name.toLowerCase().includes(selectedSearch.toLowerCase());
 
-      return matchesCategory && matchesTime;
+      return (
+        matchesFavorites && matchesCategory && matchesTime && matchesSearch
+      );
     });
 
     setFilteredRecipes(filtered);
     setCurrentPage(1); // Reset to the first page when filters change
-  }, [selectedCategory, selectedTime, recipes]);
+  }, [
+    selectedCategory,
+    selectedTime,
+    selectedSearch,
+    showFavorites,
+    recipeData,
+  ]);
 
-  // Pagination logic
   const indexOfLastRecipe = currentPage * recipesPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
   const currentRecipes = filteredRecipes.slice(
@@ -71,6 +70,28 @@ export default function Recipes() {
   );
 
   const totalPages = Math.ceil(filteredRecipes.length / recipesPerPage);
+
+  // Handle opening the edit modal
+  function handleOpenEditForm(recipe: RecipeType) {
+    setSelectedRecipe(recipe);
+    setShowEditForm(true);
+  }
+
+  // Handle closing the edit modal
+  function handleCloseEditForm() {
+    setSelectedRecipe(null);
+    setShowEditForm(false);
+  }
+
+  // Handle opening the add modal
+  function handleOpenAddForm() {
+    setShowAddForm(true);
+  }
+
+  // Handle closing the add modal
+  function handleCloseAddForm() {
+    setShowAddForm(false);
+  }
 
   return (
     <div className="pb-20 overflow-y-scroll relative inter">
@@ -85,7 +106,7 @@ export default function Recipes() {
           </div>
 
           {/* Filters */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row justify-between items-end gap-4 mb-8">
             <div className="flex flex-col">
               <SelectDropdown
                 label="Filter by Category"
@@ -110,6 +131,17 @@ export default function Recipes() {
                 onChange={(option) => setSelectedTime(option.id as string)}
               />
             </div>
+
+            {/* Favorites Filter Button */}
+            <div className="flex flex-col">
+              <h5 className={`block `}>Filter by favorites</h5>
+              <button
+                className={`flex gap-2.5 justify-between items-center w-full cursor-default rounded bg-white text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 text-xs sm:text-sm py-2 px-1 lg:py-4 lg:px-3 mt-2`}
+                onClick={() => setShowFavorites(!showFavorites)}
+              >
+                {showFavorites ? "Show All Recipes" : "Show Favorites"}
+              </button>
+            </div>
           </div>
 
           {/* Recipes List */}
@@ -118,18 +150,26 @@ export default function Recipes() {
           ) : error ? (
             <div className="text-center text-red-500">{error}</div>
           ) : currentRecipes.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-2.5 mt-10">
-              {currentRecipes.map((recipe) => (
-                <RecipeCard
-                  key={recipe.id}
-                  image={recipe.image}
-                  name={recipe.name}
-                  time={recipe.time}
-                  category={recipe.category}
-                  isFavorite={recipe.isFavorite}
-                  bgColor="#E7FAFE"
-                />
-              ))}
+            <div className="flex flex-col justify-center items-center">
+              <Button text={"Add Recipe"} customFunction={handleOpenAddForm} />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-2.5 mt-10">
+                {currentRecipes.map((recipe) => (
+                  <RecipeCard
+                    key={recipe.id}
+                    id={recipe.id}
+                    image={recipe.image}
+                    name={recipe.name}
+                    time={recipe.time}
+                    category={recipe.category}
+                    isFavorite={recipe.isFavorite}
+                    handleDeleteRecipe={() => deleteRecipe(recipe.id)}
+                    handleOpenEditForm={() => handleOpenEditForm(recipe)}
+                    handleToggleFavorite={() => toggleFavorite(recipe.id)}
+                    bgColor="#E7FAFE"
+                  />
+                ))}
+              </div>
             </div>
           ) : (
             <div className="col-span-full text-center text-gray-500">
@@ -147,6 +187,26 @@ export default function Recipes() {
           )}
         </div>
       </section>
+
+      {/* Edit Recipe Form */}
+      {showEditForm && (
+        <EditRecipeForm
+          handleForm={handleCloseEditForm}
+          editRecipe={editRecipe}
+          initialRecipe={selectedRecipe}
+        />
+      )}
+
+      {/* Add Recipe Form */}
+      {showAddForm && (
+        <AddRecipeForm
+          AddRecipe={async (recipe) => {
+            await addRecipe(recipe);
+            handleCloseAddForm();
+          }}
+          handleForm={handleCloseAddForm}
+        />
+      )}
     </div>
   );
 }

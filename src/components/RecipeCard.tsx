@@ -3,8 +3,12 @@ import timer from "../assets/icons/Timer.png";
 import forkKnife from "../assets/icons/ForkKnife.png";
 import heart_fill from "../assets/icons/heart_fill.png";
 import heart_blank from "../assets/icons/heart_blank.png";
+import { Link } from "react-router-dom";
+import { RecipeCardType } from "../utils/Types";
+import React from "react";
 
-export default function Recipe({
+const Recipe = React.memo(({
+  id,
   image,
   name,
   time,
@@ -15,22 +19,10 @@ export default function Recipe({
   handleDeleteRecipe,
   handleOpenEditForm,
   handleToggleFavorite,
-}: {
-  image: string;
-  name: string;
-  time: number | string;
-  category: string;
-  isFavorite: boolean;
-  bgColor?: string;
-  customClass?: string;
-  handleDeleteRecipe?: () => void;
-  handleOpenEditForm?: () => void;
-  handleToggleFavorite?: () => void;
-}) {
-  
+}: RecipeCardType) => {
   return (
     <div
-      className={`relative flex flex-col justify-between gap-4 rounded-2xl p-3 w-full sm:w-fit max-w-80 max-h-96 cursor-pointer ${customClass}`}
+      className={`relative flex flex-col justify-between gap-4 rounded-2xl p-3 w-full sm:w-fit max-w-80 max-h-96 min-h-96 cursor-pointer ${customClass}`}
       style={{
         background: `linear-gradient(to bottom, white, ${
           bgColor ? bgColor : "transparent"
@@ -44,23 +36,30 @@ export default function Recipe({
         >
           <img src={isFavorite ? heart_fill : heart_blank} alt="fav" />
         </div>
-        <img src={image} alt={name} />
+        <Link to={`/recipes/${id}`}>
+          <img src={image} alt={name} />
+        </Link>
       </figure>
       <div>
-        <p className="text-xl font-semibold mb-6">{name}</p>
+        <Link
+          to={`/recipes/${id}`}
+          className="text-xl font-semibold mb-6 hover:text-blue-500/70 transition"
+        >
+          {name}
+        </Link>
         <div className="flex ml-[-8px]">
           <Badge icon={timer} text={`${time} minutes`} />
           <Badge icon={forkKnife} text={category} />
         </div>
       </div>
-      <div
-        className="absolute bottom-4 right-4"
-      >
-        <Dropdown 
-          handleDeleteRecipe={handleDeleteRecipe || (() => {})} 
+      <div className="absolute bottom-4 right-4">
+        <Dropdown
+          handleDeleteRecipe={handleDeleteRecipe || (() => {})}
           handleOpenEditForm={handleOpenEditForm || (() => {})}
         />
       </div>
     </div>
   );
-}
+});
+
+export default Recipe;

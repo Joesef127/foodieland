@@ -1,7 +1,6 @@
 import { useState } from "react";
-import "./App.css";
-import HeroSlide from "./components/HeroSlide";
-import { Swiper, SwiperSlide } from "swiper/react";
+
+// images
 import rice from "./assets/images/rice.png";
 import veggies from "./assets/images/veggies.png";
 import beef from "./assets/images/beef.png";
@@ -17,6 +16,8 @@ import post2 from "./assets/images/post2.png";
 import post3 from "./assets/images/post3.png";
 import post4 from "./assets/images/post4.png";
 import community_bg from "./assets/images/community_bg.png";
+
+// utils
 import {
   Button,
   CategoryItem,
@@ -25,29 +26,29 @@ import {
   StickyObject,
   SubHeading,
 } from "./utils/Utils";
-
-import { Autoplay, Pagination } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/autoplay";
-
-import Recipe from "./components/RecipeCard";
 import { RecipeType } from "./utils/Types";
-import Newsletter from "./components/Newsletter";
-import { useEffect } from "react";
-import AddRecipeForm from "./components/AddRecipe";
-import EditRecipeForm from "./components/EditRecipe";
-import { heroSlides } from "./utils/HeroSlidesData";
 
+// components
+import Recipe from "./components/RecipeCard";
+import Newsletter from "./components/Newsletter";
+import EditRecipeForm from "./components/EditRecipe";
+import HeroSection from "./components/HomeHeroSection";
+
+// custom hooks
+import useRecipe from "./utils/useRecipe";
 function App() {
-  const [recipeData, setRecipeData] = useState<RecipeType[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const {
+    recipeData,
+    isLoading,
+    error,
+    editRecipe,
+    deleteRecipe,
+    toggleFavorite,
+  } = useRecipe();
+
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [selectedRecipe, setSelectedRecipe] = useState<RecipeType | null>(null);
 
-  // const slides = [1, 2, 3, 4, 5];
   const categories = [
     { image: rice, name: "Rice", bgColor: "#F7F8F4" },
     { image: veggies, name: "Veggies", bgColor: "#FAFDF8" },
@@ -63,17 +64,6 @@ function App() {
     { image: post4, name: "Post 4" },
   ];
 
-  useEffect(() => {
-    fetchRecipe();
-  }, []);
-
-  function handleOpenAddForm() {
-    return setShowAddForm(true);
-  }
-
-  function handleCloseAddForm() {
-    return setShowAddForm(false);
-  }
 
   function handleOpenEditForm(recipe: RecipeType) {
     setSelectedRecipe(recipe);
@@ -85,177 +75,143 @@ function App() {
     setShowEditForm(false);
   }
 
-  const fetchRecipe = async (): Promise<void> => {
-    try {
-      const response = await fetch("http://localhost:8000/recipes/");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data: RecipeType[] = await response.json();
-      setRecipeData(data);
-    } catch (error) {
-      console.error("Error fetching recipe data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const fetchRecipeData = async () => {
+  //   try {
+  //     const response = await fetchRecipe();
+  //     const data = response;
+  //     setRecipeData(data);
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error("Error fetching recipe data:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
-  async function AddRecipe(recipe: RecipeType) {
-    try {
-      const res = await fetch(`http://localhost:8000/recipes/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(recipe),
-      });
+  // async function AddRecipe(recipe: RecipeType) {
+  //   try {
+  //     const res = await fetch(`http://localhost:8000/recipes/`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(recipe),
+  //     });
 
-      if (res.ok) {
-        console.log("Recipe added successfully");
-        const createdRecipe = await res.json();
-        setRecipeData((prevData) => [...prevData, createdRecipe]);
-        fetchRecipe();
-      } else if (res.status === 422) {
-        const errorData = await res.json();
-        if (errorData.errors) {
-          console.error("Validation errors:", errorData.errors);
-        } else {
-          console.error("Error adding recipe:", errorData);
-        }
-      } else if (res.status === 500) {
-        console.error("Server error while adding recipe");
-      }
-    } catch (error) {
-      console.error("Network error while adding recipe:", error);
-    }
-  }
+  //     if (res.ok) {
+  //       console.log("Recipe added successfully");
+  //       const createdRecipe = await res.json();
+  //       setRecipeData((prevData) => [...prevData, createdRecipe]);
+  //       fetchRecipeData();
+  //     } else if (res.status === 422) {
+  //       const errorData = await res.json();
+  //       if (errorData.errors) {
+  //         console.error("Validation errors:", errorData.errors);
+  //       } else {
+  //         console.error("Error adding recipe:", errorData);
+  //       }
+  //     } else if (res.status === 500) {
+  //       console.error("Server error while adding recipe");
+  //     }
+  //   } catch (error) {
+  //     console.error("Network error while adding recipe:", error);
+  //   }
+  // }
 
-  async function handleEditRecipe(id: number | undefined, recipe: RecipeType) {
-    try {
-      const res = await fetch(`http://localhost:8000/recipes/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(recipe),
-      });
-      if (res.ok) {
-        console.log(`Recipe with ID ${id} edited successfully`);
-        const updatedRecipeData = await res.json();
-        setRecipeData((prevData) =>
-          prevData.map((recipe) =>
-            recipe.id === id ? updatedRecipeData : recipe
-          )
-        );
-        fetchRecipe();
-      } else if (res.status === 404) {
-        console.error(`Recipe with ID ${id} not found`);
-      } else if (res.status === 500) {
-        console.error("Server error while editing recipe");
-      } else {
-        const errorData = await res.json();
-        console.error("Error editing recipe:", errorData);
-      }
-    } catch (error) {
-      console.error("Network error while editing recipe:", error);
-    }
-  }
+  // async function handleEditRecipe(id: number | undefined, recipe: RecipeType) {
+  //   try {
+  //     const res = await fetch(`http://localhost:8000/recipes/${id}`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(recipe),
+  //     });
+  //     if (res.ok) {
+  //       console.log(`Recipe with ID ${id} edited successfully`);
+  //       const updatedRecipeData = await res.json();
+  //       setRecipeData((prevData) =>
+  //         prevData.map((recipe) =>
+  //           recipe.id === id ? updatedRecipeData : recipe
+  //         )
+  //       );
+  //       fetchRecipeData();
+  //     } else if (res.status === 404) {
+  //       console.error(`Recipe with ID ${id} not found`);
+  //     } else if (res.status === 500) {
+  //       console.error("Server error while editing recipe");
+  //     } else {
+  //       const errorData = await res.json();
+  //       console.error("Error editing recipe:", errorData);
+  //     }
+  //   } catch (error) {
+  //     console.error("Network error while editing recipe:", error);
+  //   }
+  // }
 
-  async function handleDeleteRecipe(id: number | undefined) {
-    try {
-      const res = await fetch(`http://localhost:8000/recipes/${id}`, {
-        method: "DELETE",
-      });
+  // async function handleDeleteRecipe(id: number | undefined) {
+  //   try {
+  //     const res = await fetch(`http://localhost:8000/recipes/${id}`, {
+  //       method: "DELETE",
+  //     });
 
-      if (res.ok) {
-        console.log(`Recipe with ID ${id} deleted successfully`);
-        setRecipeData((prevData) =>
-          prevData.filter((recipe) => recipe.id !== id)
-        );
-        fetchRecipe();
-      } else if (res.status === 404) {
-        console.error(`Recipe with ID ${id} not found`);
-      } else if (res.status === 500) {
-        console.error("Server error while deleting recipe");
-      } else {
-        const errorData = await res.json();
-        console.error("Error deleting recipe:", errorData);
-      }
-    } catch (error) {
-      console.error("Network error while deleting recipe:", error);
-    }
-  }
+  //     if (res.ok) {
+  //       console.log(`Recipe with ID ${id} deleted successfully`);
+  //       setRecipeData((prevData) =>
+  //         prevData.filter((recipe) => recipe.id !== id)
+  //       );
+  //       fetchRecipeData();
+  //     } else if (res.status === 404) {
+  //       console.error(`Recipe with ID ${id} not found`);
+  //     } else if (res.status === 500) {
+  //       console.error("Server error while deleting recipe");
+  //     } else {
+  //       const errorData = await res.json();
+  //       console.error("Error deleting recipe:", errorData);
+  //     }
+  //   } catch (error) {
+  //     console.error("Network error while deleting recipe:", error);
+  //   }
+  // }
 
-  async function handleToggleFavorite(id: number | undefined) {
-    try {
-      const res = await fetch(
-        `http://localhost:8000/recipes/${id}/toggle_favorite`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  // async function handleToggleFavorite(id: number | undefined) {
+  //   try {
+  //     const res = await fetch(
+  //       `http://localhost:8000/recipes/${id}/toggle_favorite`,
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
 
-      if (res.ok) {
-        console.log(
-          `Recipe with ID ${id} favorite status toggled successfully`
-        );
-        const updatedRecipe = await res.json();
-        setRecipeData((prevData) =>
-          prevData.map((recipe) => (recipe.id === id ? updatedRecipe : recipe))
-        );
-        console.log(`updatedRecipe: ${updatedRecipe.isFavorite}`);
-        fetchRecipe();
-      } else if (res.status === 404) {
-        console.error(`Recipe with ID ${id} not found`);
-      } else if (res.status === 500) {
-        console.error("Server error while toggling favorite status");
-      } else {
-        const errorData = await res.json();
-        console.error("Error toggling favorite status:", errorData);
-      }
-    } catch (error) {
-      console.error("Network error while toggling favorite status:", error);
-    }
-  }
+  //     if (res.ok) {
+  //       console.log(
+  //         `Recipe with ID ${id} favorite status toggled successfully`
+  //       );
+  //       const updatedRecipe = await res.json();
+  //       setRecipeData((prevData) =>
+  //         prevData.map((recipe) => (recipe.id === id ? updatedRecipe : recipe))
+  //       );
+  //       console.log(`updatedRecipe: ${updatedRecipe.isFavorite}`);
+  //       fetchRecipeData();
+  //     } else if (res.status === 404) {
+  //       console.error(`Recipe with ID ${id} not found`);
+  //     } else if (res.status === 500) {
+  //       console.error("Server error while toggling favorite status");
+  //     } else {
+  //       const errorData = await res.json();
+  //       console.error("Error toggling favorite status:", errorData);
+  //     }
+  //   } catch (error) {
+  //     console.error("Network error while toggling favorite status:", error);
+  //   }
+  // }
 
   return (
-    <div className="pt-10 pb-40 overflow-y-scroll relative inter">
-      <section className="flex justify-center items-center">
-        <div className="w-[95%] sm:w-[90%]">
-          <Swiper
-            spaceBetween={30}
-            slidesPerView={1}
-            centeredSlides={true}
-            pagination={{
-              clickable: true,
-            }}
-            loop={true}
-            modules={[Pagination, Autoplay]}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: true,
-            }}
-            className="mySwiper"
-          >
-            {heroSlides &&
-              heroSlides.map((slide, index: number) => (
-                <SwiperSlide key={index}>
-                  <HeroSlide
-                    title={slide.title}
-                    description={slide.description}
-                    badges={slide.badges}
-                    user={slide.user}
-                    backgroundImage={slide.backgroundImage}
-                    button={slide.button}
-                  />
-                </SwiperSlide>
-              ))}
-          </Swiper>
-        </div>
-      </section>
+    <div className="pt-10 pb-40 overflow-y-scroll relative inter">      
+      <HeroSection />
 
       <section className="flex justify-center items-center mt-40">
         <div className="w-[95%] sm:w-[90%] flex flex-col gap-18">
@@ -295,44 +251,38 @@ function App() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-7xl">
             {isLoading && <LoadingSpinner />}
+            {error && <p className="text-red-500">{error}</p>}
             {recipeData &&
               recipeData
-                .slice(0, 9)
+                .slice(0, 9)     
                 .map((recipe: RecipeType) => (
                   <Recipe
                     key={recipe.id}
+                    id={recipe.id}
                     image={recipe.image}
                     name={recipe.name}
                     time={recipe.time}
                     category={recipe.category}
                     isFavorite={recipe.isFavorite}
-                    handleDeleteRecipe={() => handleDeleteRecipe(recipe.id)}
+                    handleDeleteRecipe={() => deleteRecipe(recipe.id)}
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
-                    handleToggleFavorite={() => handleToggleFavorite(recipe.id)}
+                    handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     customClass="p-2.5"
                     bgColor="#E7FAFE"
                   />
                 ))}
           </div>
-          <Button text={"Add Recipe"} customFunction={handleOpenAddForm} />
         </div>
 
-        {showAddForm && (
-          <div className="absolute p-10 bg-white h-fit flex justify-center items-center rounded-2xl shadow-2xl">
-            <AddRecipeForm
-              AddRecipe={AddRecipe}
-              handleForm={handleCloseAddForm}
-            />
-          </div>
-        )}
         {showEditForm && (
-          <div className="absolute p-10 bg-white h-fit flex justify-center items-center rounded-2xl shadow-2xl">
             <EditRecipeForm
-              editRecipe={handleEditRecipe}
+              editRecipe={async (id, recipe) => {
+                await editRecipe(id, recipe);
+                handleCloseEditForm();
+              }}
               handleForm={handleCloseEditForm}
               initialRecipe={selectedRecipe}
             />
-          </div>
         )}
       </section>
 
@@ -447,7 +397,7 @@ function App() {
         </div>
       </section>
 
-      <section className="mb-32 flex justify-center items-center">
+      <section className="relative mb-32 flex justify-center items-center">
         <div className="w-[95%] sm:w-[90%] flex flex-col justify-center items-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-5 sm:gap-20">
             <Heading
@@ -463,21 +413,26 @@ function App() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-0 mt-10">
-            {isLoading && <div>loading...</div>}
+            {isLoading && (
+              <div>
+                <LoadingSpinner />
+              </div>
+            )}
             {recipeData &&
               recipeData
-                .slice(0, 8)
+                ?.slice(recipeData.length - 8, recipeData.length)
                 .map((recipe: RecipeType) => (
                   <Recipe
                     key={recipe.id}
+                    id={recipe.id}
                     image={recipe.image}
                     name={recipe.name}
                     time={recipe.time}
                     category={recipe.category}
                     isFavorite={recipe.isFavorite}
-                    handleDeleteRecipe={() => handleDeleteRecipe(recipe.id)}
+                    handleDeleteRecipe={() => deleteRecipe(recipe.id)}
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
-                    handleToggleFavorite={() => handleToggleFavorite(recipe.id)}
+                    handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     customClass="p-2.5"
                   />
                 ))}

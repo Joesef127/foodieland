@@ -7,6 +7,20 @@ export interface RecipeType {
   isFavorite: boolean,
 }
 
+export interface RecipeCardType {
+  id?: number;
+  image: string;
+  name: string;
+  time: number | string;
+  category: string;
+  isFavorite: boolean;
+  bgColor?: string;
+  customClass?: string;
+  handleDeleteRecipe?: () => void;
+  handleOpenEditForm?: () => void;
+  handleToggleFavorite?: () => void;
+}
+
 export interface BadgeType {
   icon: string;
   text: string;
@@ -70,7 +84,7 @@ export interface SelectDropdownProps {
 };
 
 export interface FormInputProps {
-  type: string;
+  type?: string;
   placeholder: string;
   customClass?: string;
   customFunction?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -81,7 +95,9 @@ export interface FormInputProps {
   label?: string;
   labelStyle?: string;
   inputStyle?: string;
-  isTextArea?: boolean
+  isTextArea?: boolean;
+  rows?: number;
+  cols?: number;
 };
 
 

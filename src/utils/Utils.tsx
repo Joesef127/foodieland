@@ -1,13 +1,19 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import "./utils.css";
-import { BadgeProps, ButtonProps, CategoryItemProps, DropdownProps, FormInputProps, HeadingProps, StickyObjectProps, SubHeadingProps } from "./Types";
+import {
+  BadgeProps,
+  ButtonProps,
+  CategoryItemProps,
+  DropdownProps,
+  FormInputProps,
+  HeadingProps,
+  StickyObjectProps,
+  SubHeadingProps,
+} from "./Types";
 
-export const Badge = ({
-  icon,
-  text,
-  fontWeight,
-  customClass,
-}: BadgeProps) => {
+export const BaseUrl = "http://localhost:8000/"
+
+export const Badge = ({ icon, text, fontWeight, customClass }: BadgeProps) => {
   return (
     <div
       className={`flex items-center gap-1.5 rounded-full sm:py-2 sm:px-3 py-1.5 px-2.5 w-fit ${customClass}`}
@@ -20,11 +26,7 @@ export const Badge = ({
   );
 };
 
-export const CategoryItem = ({
-  image,
-  name,
-  bgColor,
-}: CategoryItemProps) => {
+export const CategoryItem = ({ image, name, bgColor }: CategoryItemProps) => {
   return (
     <div
       className={`flex flex-col justify-center items-center w-full gap-4 md:gap-6 lg:gap-8 py-5 px-8 rounded-3xl shadow-md`}
@@ -65,10 +67,7 @@ export const Button = ({
   );
 };
 
-export const Heading = ({
-  text,
-  customClass,
-}: HeadingProps) => {
+export const Heading = ({ text, customClass }: HeadingProps) => {
   return (
     <h1
       className={`font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl ${customClass}`}
@@ -78,10 +77,7 @@ export const Heading = ({
   );
 };
 
-export const SubHeading = ({
-  text,
-  customClass,
-}: SubHeadingProps) => {
+export const SubHeading = ({ text, customClass }: SubHeadingProps) => {
   return (
     <h2
       className={`font-normal text-xs sm:text-sm lg:text-base ${customClass}`}
@@ -91,10 +87,7 @@ export const SubHeading = ({
   );
 };
 
-export const StickyObject = ({
-  image,
-  customClass,
-}: StickyObjectProps) => {
+export const StickyObject = ({ image, customClass }: StickyObjectProps) => {
   return (
     <span>
       <img
@@ -176,23 +169,38 @@ export const FormInput = ({
   label,
   labelStyle,
   inputStyle,
-  isTextArea
+  isTextArea,
+  rows,
+  cols,
 }: FormInputProps) => {
   return (
     <div className={`grid grid-cols-1 gap-2 ${customClass}`}>
-      <label htmlFor={id} className={labelStyle}>{label}</label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        className={`w-full rounded-md shadow-sm py-4 px-5 text-sm border border-gray-300 bg-transparent focus:border-indigo-500 focus:ring-indigo-500 ${inputStyle}`}
-        onChange={customFunction}
-        value={value}
-        name={name}
-        id={id}
-        required={required}
-      />
+      <label htmlFor={id} className={labelStyle}>
+        {label}
+      </label>
+      {isTextArea ? (
+        <textarea
+          rows={rows}
+          cols={cols}
+          name={name}
+          id={id}
+          placeholder={placeholder}
+          value={value}
+          required={required}
+          className={`w-full rounded-md shadow-sm py-2 px-3 lg:py-4 lg:px-5 text-sm border border-gray-300 bg-transparent focus:border-indigo-500 focus:ring-indigo-500 ${inputStyle}`}
+        ></textarea>
+      ) : (
+        <input
+          type={type}
+          placeholder={placeholder}
+          className={`w-full rounded-md shadow-sm py-2 px-3 lg:py-4 lg:px-5 text-sm border border-gray-300 bg-transparent focus:border-indigo-500 focus:ring-indigo-500 ${inputStyle}`}
+          onChange={customFunction}
+          value={value}
+          name={name}
+          id={id}
+          required={required}
+        />
+      )}
     </div>
-
-
-  )
-}
+  );
+};

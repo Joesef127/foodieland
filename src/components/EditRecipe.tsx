@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/16/solid";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
 import { RecipeType } from "../utils/Types";
 
 export default function EditRecipeForm({
@@ -8,7 +13,7 @@ export default function EditRecipeForm({
   initialRecipe,
 }: {
   handleForm: () => void;
-  editRecipe: (id: number | undefined, recipe: RecipeType) => Promise<void>;
+  editRecipe: (id: number | undefined, recipe: RecipeType) => Promise<RecipeType | void>;
   initialRecipe: RecipeType | null;
 }) {
   const [recipe, setRecipe] = useState<RecipeType>(
@@ -33,140 +38,155 @@ export default function EditRecipeForm({
   }
 
   return (
-    <form
-      className="w-full h-full flex flex-col justify-center items-center bg-white"
-      onSubmit={handleEditRecipe}
-    >
-      <div className="mx-auto">
-        <h2 className="text-base/7 font-semibold text-gray-900">Edit Recipe</h2>
-        <p className="mt-1 text-sm/6 text-gray-600">
-          Please update the form below to edit the recipe.
-        </p>
+    <Dialog open={true} onClose={handleForm} className="relative z-10">
+      {/* Dark overlay background */}
+      <DialogBackdrop className="fixed inset-0 bg-gray-500/75 transition-opacity" />
 
-        <div className="mt-5 w-full">
-          <div className="sm:col-span-4">
-            <label
-              htmlFor="recipe-name"
-              className="block text-sm/6 font-medium text-gray-900"
-            >
-              Name
-            </label>
-            <div className="mt-2">
-              <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                <input
-                  id="recipe-name"
-                  name="recipe-name"
-                  type="text"
-                  value={recipe.name}
-                  onChange={(e) =>
-                    setRecipe({ ...recipe, name: e.target.value })
-                  }
-                  placeholder="Recipe name"
-                  className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="my-5 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="cooking-time"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Cooking Time
-              </label>
-              <div className="mt-2">
-                <input
-                  id="cooking-time"
-                  name="cooking-time"
-                  value={recipe.time}
-                  onChange={(e) =>
-                    setRecipe({ ...recipe, time: Number(e.target.value) })
-                  }
-                  type="number"
-                  placeholder="Cooking time in mins"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
+      {/* Modal container */}
+      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+            {/* Modal header */}
+            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="sm:flex sm:items-start">
+                <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <DialogTitle
+                    as="h3"
+                    className="text-base font-semibold text-gray-900"
+                  >
+                    Edit Recipe
+                  </DialogTitle>
+                  <p className="mt-1 text-sm text-gray-600">
+                    Please update the form below to edit the recipe.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="category"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Category
-              </label>
-              <div className="mt-2 grid grid-cols-1">
-                <select
-                  id="category"
-                  name="category"
-                  value={recipe.category}
-                  onChange={(e) =>
-                    setRecipe({ ...recipe, category: e.target.value })
-                  }
-                  className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            {/* Modal form */}
+            <form className="bg-white px-4 sm:px-6" onSubmit={handleEditRecipe}>
+              <div className="mt-5 w-full">
+                <div className="sm:col-span-4">
+                  <label
+                    htmlFor="recipe-name"
+                    className="block text-sm font-medium text-gray-900"
+                  >
+                    Name
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="recipe-name"
+                      name="recipe-name"
+                      type="text"
+                      value={recipe.name}
+                      onChange={(e) =>
+                        setRecipe({ ...recipe, name: e.target.value })
+                      }
+                      placeholder="Recipe name"
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="my-5 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-6">
+                  <div className="sm:col-span-3">
+                    <label
+                      htmlFor="cooking-time"
+                      className="block text-sm font-medium text-gray-900"
+                    >
+                      Cooking Time
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        id="cooking-time"
+                        name="cooking-time"
+                        value={recipe.time}
+                        onChange={(e) =>
+                          setRecipe({ ...recipe, time: Number(e.target.value) })
+                        }
+                        type="number"
+                        placeholder="Cooking time in mins"
+                        className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="sm:col-span-3">
+                    <label
+                      htmlFor="category"
+                      className="block text-sm font-medium text-gray-900"
+                    >
+                      Category
+                    </label>
+                    <div className="mt-2">
+                      <select
+                        id="category"
+                        name="category"
+                        value={recipe.category}
+                        onChange={(e) =>
+                          setRecipe({ ...recipe, category: e.target.value })
+                        }
+                        className="block w-full rounded-md bg-white py-1.5 px-3 text-base text-gray-900 outline-1 outline-gray-300 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                      >
+                        <option>Select a category</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="snack">Snack</option>
+                        <option value="healthy">Healthy</option>
+                        <option value="meat">Meat</option>
+                        <option value="noodles">Noodles</option>
+                        <option value="sweet">Sweet</option>
+                        <option value="western">Western</option>
+                        <option value="eastern">Eastern</option>
+                        <option value="japanese">Japanese</option>
+                        <option value="seafood">Seafood</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="col-span-full">
+                    <label
+                      htmlFor="recipe-image"
+                      className="block text-sm font-medium text-gray-900"
+                    >
+                      Recipe Image
+                    </label>
+                    <div className="mt-2">
+                      <input
+                        id="recipe-image"
+                        name="recipe-image"
+                        type="url"
+                        value={recipe.image}
+                        onChange={(e) =>
+                          setRecipe({ ...recipe, image: e.target.value })
+                        }
+                        placeholder="Paste recipe image URL"
+                        className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal actions */}
+              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button
+                  type="submit"
+                  className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 sm:ml-3 sm:w-auto"
                 >
-                  <option>Select a category</option>
-                  <option value="breakfast">Breakfast</option>
-                  <option value="snack">Snack</option>
-                  <option value="healthy">Healthy</option>
-                  <option value="meat">Meat</option>
-                  <option value="noodles">Noodles</option>
-                  <option value="sweet">Sweet</option>
-                  <option value="western">Western</option>
-                  <option value="eastern">Eastern</option>
-                  <option value="japanese">Japanese</option>
-                  <option value="seafood">Seafood</option>
-                </select>
-                <ChevronDownIcon
-                  aria-hidden="true"
-                  className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                />
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  onClick={handleForm}
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                >
+                  Cancel
+                </button>
               </div>
-            </div>
-
-            <div className="col-span-full">
-              <label
-                htmlFor="recipe-image"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Recipe Image
-              </label>
-              <div className="mt-2">
-                <input
-                  id="recipe-image"
-                  name="recipe-image"
-                  type="url"
-                  value={recipe.image}
-                  onChange={(e) =>
-                    setRecipe({ ...recipe, image: e.target.value })
-                  }
-                  placeholder="Paste recipe image URL"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
-            </div>
-          </div>
+            </form>
+          </DialogPanel>
         </div>
       </div>
-
-      <div className="mt-5 w-full min-w-max flex gap-2.5 items-center justify-center gap-x-6">
-        <button
-          type="button"
-          className="w-1/2 text-sm/6 font-semibold text-gray-900 bg-white hover:bg-gray-50 shadow-md px-3 py-2 cursor-pointer"
-          onClick={handleForm}
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="w-1/2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer"
-        >
-          Save Changes
-        </button>
-      </div>
-    </form>
+    </Dialog>
   );
 }
