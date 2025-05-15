@@ -1,8 +1,8 @@
 import { Badge, Dropdown } from "../utils/Utils";
-import timer from "../assets/icons/Timer.png";
-import forkKnife from "../assets/icons/ForkKnife.png";
-import heart_fill from "../assets/icons/heart_fill.png";
-import heart_blank from "../assets/icons/heart_blank.png";
+import timer from "../assets/icons/Timer.svg";
+import forkKnife from "../assets/icons/ForkKnife.svg";
+import heart_fill from "../assets/icons/heart_fill.svg";
+import heart_blank from "../assets/icons/heart_blank.svg";
 import { Link } from "react-router-dom";
 import { RecipeCardType } from "../utils/Types";
 import React from "react";

@@ -1,43 +1,76 @@
 import SocialMediaBox from "./SocialMediaBox";
-import foodieland_logo from "../assets/foodieland_logo.png";
+import foodieland_logo from "../assets/foodieland_logo.svg";
 import { NavLink } from "react-router-dom";
 
 export default function Footer() {
   const currentYear: number = new Date().getFullYear();
   return (
-    <div className="flex flex-col justify-center items-center relative bottom-0 w-full bg-white">
-      <div className="w-full flex justify-center items-center max-w-[1440px]">
-        <div className="w-[90%] flex flex-wrap gap-2.5 justify-between items-baseline-last">
-          <div className="flex flex-col flex-wrap justify-start gap-4">
+    <footer className="flex flex-col justify-center items-center w-full bg-white py-8">
+      <div className="w-[90%] max-w-[1440px] flex flex-col justify-between items-center">
+        {/* Top Section */}
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <div className="flex flex-col items-start gap-4 md:text-left">
             <figure>
-              <img src={foodieland_logo} alt="foodieland" className="w-28" />
+              <img
+                src={foodieland_logo}
+                alt="foodieland"
+                className="w-24 md:w-28"
+              />
             </figure>
-            <p className="text-lg text-gray-500">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <p className="text-sm md:text-base text-gray-500 max-w-full">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Discover
+              the best recipes and culinary tips.
             </p>
           </div>
-          <div className="flex justify-center items-center">
-            <nav className="flex gap-8">
-              <NavLink to={"/recipes"}>Recipes</NavLink>
-              <NavLink to={"/blog"}>Blog</NavLink>
-              <NavLink to={"/contact"}>Contact</NavLink>
-              <NavLink to={"/about"}>About us</NavLink>
-            </nav>
+
+
+          <nav className="flex flex-wrap justify-start items-center md:justify-end gap-6 text-sm md:text-base">
+            <NavLink
+              to={"/recipes"}
+              className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors"
+            >
+              Recipes
+            </NavLink>
+            <NavLink
+              to={"/blog"}
+              className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors"
+            >
+              Blog
+            </NavLink>
+            <NavLink
+              to={"/contact"}
+              className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors"
+            >
+              Contact
+            </NavLink>
+            <NavLink
+              to={"/about"}
+              className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors"
+            >
+              About us
+            </NavLink>
+          </nav>
+
+        </div>
+
+        {/* Bottom Section */}
+        <div className="relative w-full flex flex-col sm:flex-row justify-center items-center gap-4 border-t border-gray-200 pt-4 mt-4">
+        
+          <div className="text-center md:text-left text-sm md:text-base text-gray-500">
+            <p>
+              &copy; {currentYear} Flowbase. Powered by{" "}
+              <span className="text-[#FF7967]">Webflow</span>.
+            </p>
           </div>
+
+        
+          <div className="flex justify-center md:justify-end sm:absolute sm:right-0">
+            <SocialMediaBox />
+          </div>
+
         </div>
       </div>
-      
-      <div className="w-[90%] py-8 mt-5 border-t border-gray-200 flex justify-center items-center public-sans relative max-w-[1440px]">
-        <div className="flex gap-1 text-lg">
-          <p className="text-gray-500">&copy; {currentYear} Flowbase.</p>
-          <p className="text-gray-500">
-            Powered by <span className="text-[#FF7967]">Webflow</span>
-          </p>
-        </div>
-        <div className="absolute right-0">
-          <SocialMediaBox />
-        </div>
-      </div>
-    </div>
+    </footer>
   );
 }

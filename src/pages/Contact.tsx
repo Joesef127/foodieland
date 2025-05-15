@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Button,
   FormInput,
@@ -11,6 +11,8 @@ import Newsletter from "../components/Newsletter";
 import SelectDropdown from "../utils/SelectDropdown";
 import RecipeCard from "../components/RecipeCard";
 import { OptionType, RecipeType } from "../utils/Types";
+import useRecipe from "../utils/useRecipe";
+import EditRecipeForm from "../components/EditRecipe";
 
 const enquiryTypeOptions = [
   { id: 1, name: "General Enquiry" },
@@ -23,28 +25,28 @@ const enquiryTypeOptions = [
 
 export default function Contact() {
   const [selectedEnquiryType, setSelectedEnquiryType] = useState<OptionType>();
-  const [recipes, setRecipes] = useState<RecipeType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch 4 recipes from the backend
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const res = await fetch("http://localhost:8000/recipes?limit=4");
-        if (!res.ok) {
-          throw new Error("Failed to fetch recipes");
-        }
-        const data: RecipeType[] = await res.json();
-        setRecipes(data);
-      } catch (error) {
-        console.error("Error fetching recipes:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const {
+    recipeData,
+    isLoading,
+    error,
+    deleteRecipe,
+    editRecipe,
+    toggleFavorite,
+  } = useRecipe();
 
-    fetchRecipes();
-  }, []);
+  const [showEditForm, setShowEditForm] = useState<boolean>(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<RecipeType | null>(null);
+
+  const handleOpenEditForm = (recipe: RecipeType) => {
+    setSelectedRecipe(recipe);
+    setShowEditForm(true);
+  };
+
+  const handleCloseEditForm = () => {
+    setSelectedRecipe(null);
+    setShowEditForm(false);
+  };
 
   return (
     <div className="pb-20 overflow-y-scroll relative inter">
@@ -152,25 +154,36 @@ export default function Contact() {
             text="Check out the delicious recipes"
             customClass="text-center"
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-0 mt-10">
-            {isLoading && (
-              <div>
-                <LoadingSpinner />
-              </div>
-            )}
-            {recipes.slice(-4).map((recipe) => (
-              <RecipeCard
-                key={recipe.id}
-                id={recipe.id}
-                image={recipe.image}
-                name={recipe.name}
-                time={recipe.time}
-                category={recipe.category}
-                isFavorite={recipe.isFavorite}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : error ? (
+            <div className="text-center text-red-500">{error}</div>
+          ) : recipeData.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-0 mt-10">
+              {recipeData.slice(-4).map((recipe) => (
+                <RecipeCard
+                  key={recipe.id}
+                  id={recipe.id}
+                  image={recipe.image}
+                  name={recipe.name}
+                  time={recipe.time}
+                  category={recipe.category}
+                  isFavorite={recipe.isFavorite}
+                  handleToggleFavorite={() => toggleFavorite(recipe.id)}
+                  handleDeleteRecipe={() => deleteRecipe(recipe.id)}
+                  handleOpenEditForm={() => handleOpenEditForm(recipe)}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
+        {showEditForm && (
+          <EditRecipeForm
+            handleForm={handleCloseEditForm}
+            editRecipe={editRecipe}
+            initialRecipe={selectedRecipe}
+          />
+        )}
       </section>
     </div>
   );

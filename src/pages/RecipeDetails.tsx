@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { RecipeType } from "../utils/Types";
-import { LoadingSpinner, Heading, SubHeading } from "../utils/Utils";
+import { LoadingSpinner, Heading } from "../utils/Utils";
+import printer from "../assets/icons/printer.svg";
+import share from "../assets/icons/share.svg";
 
 export default function RecipeDetails() {
   const { id } = useParams<{ id: string }>(); 
@@ -59,26 +61,22 @@ export default function RecipeDetails() {
 
   return (
     <div className="pb-20 overflow-y-scroll relative inter">
-      <section className="relative flex flex-col items-center mt-10 gap-10">
-        <Heading text={recipe.name} customClass="text-center" />
-        <img
-          src={recipe.image}
-          alt={recipe.name}
-          className="rounded-lg shadow-md w-full max-w-64"
-        />
-        <div className="w-[95%] sm:w-[90%] lg:w-[70%] flex flex-col gap-5">
-          <SubHeading text="Details" customClass="text-gray-700" />
-          <div className="flex flex-wrap gap-4">
-            <span className="px-4 py-2 bg-gray-200 rounded-md text-sm">
-              Category: {recipe.category}
-            </span>
-            <span className="px-4 py-2 bg-gray-200 rounded-md text-sm">
-              Cooking Time: {recipe.time} mins
-            </span>
-            <span className="px-4 py-2 bg-gray-200 rounded-md text-sm">
-              Favorite: {recipe.isFavorite ? "Yes" : "No"}
-            </span>
+      <section className="relative flex justify-center items-center mt-10 gap-20">
+        <div className="w-[95%] sm:w-[90%] flex flex-col justify-center items-center gap-5">
+          <div>
+          <div className="flex flex-col justify-between items-center">
+            <Heading text={recipe.name} customClass="text-center mb-4" />
+            <div>
+              
+            </div>
           </div>
+          <div>
+            <div><img src={printer} alt="print" /></div>
+            <div><img src={share} alt="print" /></div>
+          </div>
+          </div>
+
+          <div></div>
         </div>
       </section>
     </div>

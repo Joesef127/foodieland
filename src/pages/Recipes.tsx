@@ -105,8 +105,18 @@ export default function Recipes() {
             />
           </div>
 
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
+            <input
+              type="text"
+              placeholder="Search for a recipe..."
+              value={selectedSearch}
+              onChange={(e) => setSelectedSearch(e.target.value)}
+              className="w-full sm:w-[50%] rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
           {/* Filters */}
-          <div className="flex flex-col sm:flex-row justify-between items-end gap-4 mb-8">
+          <div className="w-full flex flex-col sm:flex-row sm:justify-center sm:items-baseline gap-4 sm:gap-8">
             <div className="flex flex-col">
               <SelectDropdown
                 label="Filter by Category"
@@ -151,7 +161,7 @@ export default function Recipes() {
             <div className="text-center text-red-500">{error}</div>
           ) : currentRecipes.length > 0 ? (
             <div className="flex flex-col justify-center items-center">
-              <Button text={"Add Recipe"} customFunction={handleOpenAddForm} />
+              <Button text={"Add New Recipe"} customFunction={handleOpenAddForm} />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-2.5 mt-10">
                 {currentRecipes.map((recipe) => (
@@ -163,7 +173,7 @@ export default function Recipes() {
                     time={recipe.time}
                     category={recipe.category}
                     isFavorite={recipe.isFavorite}
-                    handleDeleteRecipe={() => deleteRecipe(recipe.id)}
+                    handleDeleteRecipe={() => deleteRecipe(recipe.id)} 
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
                     handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     bgColor="#E7FAFE"

@@ -1,8 +1,8 @@
-import scroll from "../assets/icons/scroll.png";
-import timer from "../assets/icons/Timer.png";
-import forkKnife from "../assets/icons/ForkKnife.png";
+import scroll from "../assets/icons/scroll.svg";
+import timer from "../assets/icons/Timer.svg";
+import forkKnife from "../assets/icons/ForkKnife.svg";
 import user_dp from "../assets/images/user_dp.png";
-import play_icon from "../assets/icons/play_icon.png";
+import play_icon from "../assets/icons/play_icon.svg";
 import thumbs_badge from "../assets/images/thumbs_badge.png";
 import { Badge, Button } from "../utils/Utils";
 import { HeroSlideProps } from "../utils/Types";
