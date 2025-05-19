@@ -36,7 +36,7 @@ export default function Recipes() {
     const filtered = recipeData.filter((recipe) => {
       const matchesFavorites = !showFavorites || recipe.isFavorite;
       const matchesCategory =
-        selectedCategory === "all" || recipe.category === selectedCategory;
+        selectedCategory === "all" || recipe.category.toLowerCase() === selectedCategory.toLowerCase();
       const matchesTime =
         selectedTime === "all" ||
         (selectedTime === "<30mins" && recipe.time < 30) ||
@@ -225,14 +225,20 @@ const categoryOptions = [
   { id: "all", name: "All Categories" },
   { id: "breakfast", name: "Breakfast" },
   { id: "snack", name: "Snack" },
+  { id: "seafood", name: "Seafood" },
+  { id: "italian", name: "Italian" }, 
+  { id: "salad", name: "Salad" },     
+  { id: "appetizer", name: "Appetizer" }, 
+  { id: "dessert", name: "Dessert" }, 
+  { id: "asian", name: "Asian" },     
+  { id: "mexican", name: "Mexican" }, 
+  { id: "vegan", name: "Vegan" },     
   { id: "healthy", name: "Healthy" },
   { id: "meat", name: "Meat" },
   { id: "noodles", name: "Noodles" },
   { id: "sweet", name: "Sweet" },
   { id: "western", name: "Western" },
-  { id: "eastern", name: "Eastern" },
   { id: "japanese", name: "Japanese" },
-  { id: "seafood", name: "Seafood" },
 ];
 
 const timeOptions = [

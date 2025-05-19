@@ -1,10 +1,13 @@
 export interface RecipeType {
-  id?: number,
-  name: string,
-  time: number,
-  category: string,
-  image: string,
-  isFavorite: boolean,
+  id?: number;
+  name: string;
+  time: number;
+  category: string;
+  image: string;
+  isFavorite: boolean;
+  ingredients?: string[];
+  directions?: string[];
+  nutritionInfo?: { name: string; measure: string }[];
 }
 
 export interface RecipeCardType {
@@ -25,18 +28,18 @@ export interface BadgeType {
   icon: string;
   text: string;
   customClass?: string;
-};
+}
 
 export interface UserType {
   name: string;
   profilePicture: string;
-};
+}
 
 export interface ButtonType {
   text: string;
   icon: string;
   customClass?: string;
-};
+}
 
 export interface HeroSlideProps {
   title: string;
@@ -45,7 +48,7 @@ export interface HeroSlideProps {
   user: UserType;
   backgroundImage: string;
   button: ButtonType;
-};
+}
 
 export interface HeroSlideType {
   title: string;
@@ -71,7 +74,7 @@ export interface HeroSlideType {
 export interface OptionType {
   id: string | number;
   name: string;
-};
+}
 
 export interface SelectDropdownProps {
   label: string;
@@ -81,7 +84,7 @@ export interface SelectDropdownProps {
   labelStyle?: string;
   optionStyle?: string;
   buttonStyle?: string;
-};
+}
 
 export interface FormInputProps {
   type?: string;
@@ -98,36 +101,37 @@ export interface FormInputProps {
   isTextArea?: boolean;
   rows?: number;
   cols?: number;
-};
-
+}
 
 export interface BadgeProps {
   icon: string;
   text: string;
+  time?: string;
+  timeStyle?: string;
   fontWeight?: string;
   customClass?: string;
-};
+}
 
 export interface CategoryItemProps {
   image: string;
   name: string;
   bgColor: string;
-};
+}
 
 export interface DropdownProps {
   handleDeleteRecipe: () => void;
   handleOpenEditForm?: () => void;
-};
+}
 
 export interface HeadingProps {
   text: string;
   customClass?: string;
-};
+}
 
 export interface SubHeadingProps {
   text: string;
   customClass?: string;
-};
+}
 
 export interface ButtonProps {
   text: string;
@@ -136,10 +140,14 @@ export interface ButtonProps {
   customClass?: string;
   type?: "submit" | "reset" | "button";
   customFunction?: () => void;
-};
+}
 
 export interface StickyObjectProps {
   image: string;
   customClass: string;
-};
+}
 
+export interface RecipeListProps {
+  title: string;
+  items?: string[];
+};

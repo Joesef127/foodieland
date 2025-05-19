@@ -1,18 +1,10 @@
 import { useState } from "react";
-import {
-  Button,
-  FormInput,
-  Heading,
-  LoadingSpinner,
-  SubHeading,
-} from "../utils/Utils";
+import { Button, FormInput, Heading, SubHeading } from "../utils/Utils";
 import smiling_chef from "../assets/images/smiling_chef.png";
 import Newsletter from "../components/Newsletter";
 import SelectDropdown from "../utils/SelectDropdown";
-import RecipeCard from "../components/RecipeCard";
-import { OptionType, RecipeType } from "../utils/Types";
-import useRecipe from "../utils/useRecipe";
-import EditRecipeForm from "../components/EditRecipe";
+import { OptionType } from "../utils/Types";
+import RecipeShortList from "../utils/RecipeShortList";
 
 const enquiryTypeOptions = [
   { id: 1, name: "General Enquiry" },
@@ -25,28 +17,6 @@ const enquiryTypeOptions = [
 
 export default function Contact() {
   const [selectedEnquiryType, setSelectedEnquiryType] = useState<OptionType>();
-
-  const {
-    recipeData,
-    isLoading,
-    error,
-    deleteRecipe,
-    editRecipe,
-    toggleFavorite,
-  } = useRecipe();
-
-  const [showEditForm, setShowEditForm] = useState<boolean>(false);
-  const [selectedRecipe, setSelectedRecipe] = useState<RecipeType | null>(null);
-
-  const handleOpenEditForm = (recipe: RecipeType) => {
-    setSelectedRecipe(recipe);
-    setShowEditForm(true);
-  };
-
-  const handleCloseEditForm = () => {
-    setSelectedRecipe(null);
-    setShowEditForm(false);
-  };
 
   return (
     <div className="pb-20 overflow-y-scroll relative inter">
@@ -148,43 +118,7 @@ export default function Contact() {
         <Newsletter />
       </section>
 
-      <section className="flex justify-center items-center mt-10">
-        <div className="w-[95%] sm:w-[90%] flex flex-col gap-5">
-          <Heading
-            text="Check out the delicious recipes"
-            customClass="text-center"
-          />
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : error ? (
-            <div className="text-center text-red-500">{error}</div>
-          ) : recipeData.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-0 mt-10">
-              {recipeData.slice(-4).map((recipe) => (
-                <RecipeCard
-                  key={recipe.id}
-                  id={recipe.id}
-                  image={recipe.image}
-                  name={recipe.name}
-                  time={recipe.time}
-                  category={recipe.category}
-                  isFavorite={recipe.isFavorite}
-                  handleToggleFavorite={() => toggleFavorite(recipe.id)}
-                  handleDeleteRecipe={() => deleteRecipe(recipe.id)}
-                  handleOpenEditForm={() => handleOpenEditForm(recipe)}
-                />
-              ))}
-            </div>
-          ) : null}
-        </div>
-        {showEditForm && (
-          <EditRecipeForm
-            handleForm={handleCloseEditForm}
-            editRecipe={editRecipe}
-            initialRecipe={selectedRecipe}
-          />
-        )}
-      </section>
+      <RecipeShortList headingText="Check out the delicious recipe" />
     </div>
   );
 }

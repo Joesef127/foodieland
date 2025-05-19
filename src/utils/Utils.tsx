@@ -7,21 +7,85 @@ import {
   DropdownProps,
   FormInputProps,
   HeadingProps,
+  RecipeType,
   StickyObjectProps,
   SubHeadingProps,
+  UserType,
 } from "./Types";
 
-export const BaseUrl = "http://localhost:8000/"
+export const BaseUrl = "http://localhost:8000/";
 
-export const Badge = ({ icon, text, fontWeight, customClass }: BadgeProps) => {
+export const Badge = ({
+  icon,
+  text,
+  fontWeight,
+  customClass,
+  time,
+  timeStyle,
+}: BadgeProps) => {
   return (
     <div
-      className={`flex items-center gap-1.5 rounded-full sm:py-2 sm:px-3 py-1.5 px-2.5 w-fit ${customClass}`}
+      className={`flex flex-wrap items-center gap-1 sm:gap-1.5 rounded-full sm:py-2 sm:px-3 py-1 px-2.5 w-fit ${customClass}`}
     >
       <span>
         <img src={icon} alt="" />
       </span>
-      <p className={`text-gray-600 text-sm font-${fontWeight}`}>{text}</p>
+
+      <div className="flex flex-col">
+        <p className={`text-gray-600 text-xs sm:text-sm font-${fontWeight}`}>
+          {text}
+        </p>
+
+        <p className={`text-xs sm:text-sm font-normal ${timeStyle}`}>
+          {time || ""}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export const UserBox = ({
+  userPic,
+  user,
+  customStyle,
+}: {
+  userPic?: string;
+  user?: UserType;
+  customStyle?: string;
+}) => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const currentMonthInString = (date: Date) => months[date.getMonth()];
+  const date = new Date();
+  return (
+    <div className={`flex items-center gap-2 lg:gap-4 ${customStyle}`}>
+      <figure className="overflow-hidden rounded-full max-w-10 max-h-10 lg:max-w-14 lg:max-h-14 border border-black">
+        <img src={user?.profilePicture || userPic} alt="User pic" />
+      </figure>
+      <div>
+        <h3 className="mb-1 sm:mb-2 font-bold text-xs sm:text-sm lg:text-base">
+          {user?.name || "John Smith"}
+        </h3>
+        <p className="text-xs sm:text-sm font-medium">
+          {`
+                  ${date.getDate()} 
+                  ${currentMonthInString(date)} 
+                  ${date.getFullYear()}
+                `}
+        </p>
+      </div>
     </div>
   );
 };
@@ -106,7 +170,7 @@ export const Dropdown = ({
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <MenuButton className="w-full justify-center">
+        <MenuButton className="w-full justify-center cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -128,7 +192,7 @@ export const Dropdown = ({
           <MenuItem>
             <button
               type="button"
-              className="block w-full text-start px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+              className="block w-full text-start px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden cursor-pointer"
               onClick={handleOpenEditForm}
             >
               Edit
@@ -137,7 +201,7 @@ export const Dropdown = ({
           <MenuItem>
             <button
               type="button"
-              className="block w-full text-start px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+              className="block w-full text-start px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden cursor-pointer"
               onClick={handleDeleteRecipe}
             >
               Delete
@@ -201,6 +265,30 @@ export const FormInput = ({
           required={required}
         />
       )}
+    </div>
+  );
+};
+
+export const ShuffleArray = (array: RecipeType[]) => {
+  return array
+    .map((item) => ({ item, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ item }) => item);
+};
+
+export const OutputIcon = ({
+  icon,
+  title,
+}: {
+  icon: string;
+  title: string;
+}) => {
+  return (
+    <div className="flex flex-col justify-center items-center gap-2 md:gap-4">
+      <div className="bg-[#E7FAFE] rounded-full p-4 md:p-6 lg:p-7 w-fit h-fit">
+        <img src={icon} alt="print" className="w-3" />
+      </div>
+      <p className="uppercase text-xs font-medium">{title}</p>
     </div>
   );
 };

@@ -4,6 +4,8 @@ import food5 from "../assets/images/food5.png";
 import food7 from "../assets/images/food7.png";
 import food10 from "../assets/images/food10.png";
 import food12 from "../assets/images/food12.png";
+import user_dp from "../assets/images/user_dp.png";
+
 
 export const heroSlides: HeroSlideType[] = [
   {
@@ -16,7 +18,7 @@ export const heroSlides: HeroSlideType[] = [
     ],
     user: {
       name: "John Smith",
-      profilePicture: "user_dp",
+      profilePicture: user_dp,
     },
     backgroundImage: food3,
     button: {
@@ -34,7 +36,7 @@ export const heroSlides: HeroSlideType[] = [
     ],
     user: {
       name: "Jane Doe",
-      profilePicture: "user_dp",
+      profilePicture: user_dp,
     },
     backgroundImage: food7,
     button: {
@@ -52,7 +54,7 @@ export const heroSlides: HeroSlideType[] = [
     ],
     user: {
       name: "Alice Green",
-      profilePicture: "user_dp",
+      profilePicture: user_dp,
     },
     backgroundImage: food10,
     button: {
@@ -70,7 +72,7 @@ export const heroSlides: HeroSlideType[] = [
     ],
     user: {
       name: "Robert Brown",
-      profilePicture: "user_dp",
+      profilePicture: user_dp,
     },
     backgroundImage: food12,
     button: {
@@ -88,7 +90,7 @@ export const heroSlides: HeroSlideType[] = [
     ],
     user: {
       name: "Sophia White",
-      profilePicture: "user_dp",
+      profilePicture: user_dp,
     },
     backgroundImage: food5,
     button: {

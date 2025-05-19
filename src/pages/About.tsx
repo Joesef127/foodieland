@@ -1,5 +1,4 @@
 import { Heading, SubHeading } from "../utils/Utils";
-import smiling_chef from "../assets/images/smiling_chef.png";
 import lady_cooking from "../assets/images/lady_cooking.png";
 import happy_chef from "../assets/images/happy_chef.png";
 
@@ -13,11 +12,6 @@ export default function About() {
           <SubHeading
             text="Discover the story behind Foodieland and our passion for food."
             customClass="text-center text-gray-200 max-w-3xl"
-          />
-          <img
-            src={smiling_chef}
-            alt="Smiling Chef"
-            className="rounded-lg shadow-lg max-w-full sm:max-w-2xl mt-10"
           />
         </div>
       </section>

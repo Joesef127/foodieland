@@ -4,7 +4,7 @@ import forkKnife from "../assets/icons/ForkKnife.svg";
 import user_dp from "../assets/images/user_dp.png";
 import play_icon from "../assets/icons/play_icon.svg";
 import thumbs_badge from "../assets/images/thumbs_badge.png";
-import { Badge, Button } from "../utils/Utils";
+import { Badge, Button, UserBox } from "../utils/Utils";
 import { HeroSlideProps } from "../utils/Types";
 
 export default function HeroSlide({
@@ -15,22 +15,7 @@ export default function HeroSlide({
   backgroundImage,
   button,
 }: HeroSlideProps) {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const currentMonthInString = (date: Date) => months[date.getMonth()];
-  const date = new Date();
+  
 
   return (
     <div className="w-full min-h-10/12 flex relative rounded-2xl sm:rounded-3xl md:rounded-4xl lg:rounded-5xl overflow-hidden">
@@ -67,26 +52,7 @@ export default function HeroSlide({
         </div>
 
         <div className="flex flex-col sm:flex-row justify-normal sm:justify-between sm:items-center gap-5 mt-6 sm:mt-8">
-          <div className="flex items-center gap-2 lg:gap-4">
-            <figure className="overflow-hidden rounded-full max-w-10 max-h-10 lg:max-w-14 lg:max-h-14 border border-black">
-              <img
-                src={user.profilePicture === "user_dp" ? user_dp : ""}
-                alt="User profile picture"
-              />
-            </figure>
-            <div>
-              <h3 className="mb-1 sm:mb-2 font-bold text-xs sm:text-sm lg:text-base">
-                {user.name}
-              </h3>
-              <p className="text-xs sm:text-sm font-medium">
-                {`
-                  ${date.getDate()} 
-                  ${currentMonthInString(date)} 
-                  ${date.getFullYear()}
-                `}
-              </p>
-            </div>
-          </div>
+          <UserBox userPic={user_dp} user={user} />
 
           <Button
             text={button.text}

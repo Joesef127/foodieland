@@ -22,28 +22,28 @@ const Recipe = React.memo(({
 }: RecipeCardType) => {
   return (
     <div
-      className={`relative flex flex-col justify-between gap-4 rounded-2xl p-3 w-full sm:w-fit max-w-80 max-h-96 min-h-96 cursor-pointer ${customClass}`}
+      className={`relative flex flex-col justify-between gap-4 rounded-2xl p-3 w-full h-full max-w-80 max-h-96 cursor-pointer ${customClass}`}
       style={{
         background: `linear-gradient(to bottom, white, ${
           bgColor ? bgColor : "transparent"
         })`,
       }}
     >
-      <figure className="relative overflow-hidden rounded-2xl max">
+      <figure className="relative overflow-hidden rounded-2xl max w-full">
         <div
-          className="absolute top-4 right-4 p-2.5 rounded-full bg-white"
+          className="absolute top-4 right-4 p-2.5 rounded-full bg-white z-10"
           onClick={handleToggleFavorite}
         >
           <img src={isFavorite ? heart_fill : heart_blank} alt="fav" />
         </div>
-        <Link to={`/recipes/${id}`}>
-          <img src={image} alt={name} />
+        <Link to={`/recipes/${id}`} className="relative">
+          <img src={image} alt={name} className="hover:scale-[1.1] transition-all max-h-48 w-full h-full object-cover" />
         </Link>
       </figure>
-      <div>
+      <div className="flex flex-col gap-4">
         <Link
           to={`/recipes/${id}`}
-          className="text-xl font-semibold mb-6 hover:text-blue-500/70 transition"
+          className="text-xl font-semibold hover:text-blue-500/70 transition"
         >
           {name}
         </Link>
