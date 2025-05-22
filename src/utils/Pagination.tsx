@@ -1,15 +1,12 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { PaginationProps } from "./Types";
 
-type PaginationProps = {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-};
 
 export default function Pagination({
   currentPage,
   totalPages,
   onPageChange,
+  customStyle
 }: PaginationProps) {
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -44,7 +41,7 @@ export default function Pagination({
   };
 
   return (
-    <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-5 sm:px-6 w-full">
+    <div className={`flex items-center justify-between border-t border-gray-200 bg-white px-4 py-5 sm:px-6 w-full ${customStyle}`}>
       <div className="flex flex-1 justify-between sm:hidden">
         <button
           onClick={handlePrevious}

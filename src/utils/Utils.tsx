@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import "./utils.css";
+import "../styles/utils.css";
 import {
   BadgeProps,
   ButtonProps,
@@ -48,10 +48,16 @@ export const UserBox = ({
   userPic,
   user,
   customStyle,
+  dateStyle,
+  imageStyle,
+  nameStyle
 }: {
   userPic?: string;
   user?: UserType;
   customStyle?: string;
+  dateStyle?: string;
+  nameStyle?: string;
+  imageStyle?: string;
 }) => {
   const months = [
     "January",
@@ -71,14 +77,14 @@ export const UserBox = ({
   const date = new Date();
   return (
     <div className={`flex items-center gap-2 lg:gap-4 ${customStyle}`}>
-      <figure className="overflow-hidden rounded-full max-w-10 max-h-10 lg:max-w-14 lg:max-h-14 border border-black">
+      <figure className={`overflow-hidden rounded-full max-w-10 max-h-10 lg:max-w-14 lg:max-h-14 border border-black ${imageStyle}`}>
         <img src={user?.profilePicture || userPic} alt="User pic" />
       </figure>
       <div>
-        <h3 className="mb-1 sm:mb-2 font-bold text-xs sm:text-sm lg:text-base">
+        <h3 className={`mb-1 sm:mb-2 font-bold text-xs sm:text-sm lg:text-base ${nameStyle}`}>
           {user?.name || "John Smith"}
         </h3>
-        <p className="text-xs sm:text-sm font-medium">
+        <p className={`text-xs sm:text-sm font-medium ${dateStyle}`}>
           {`
                   ${date.getDate()} 
                   ${currentMonthInString(date)} 

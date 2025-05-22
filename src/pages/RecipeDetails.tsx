@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
-import useRecipe from "../utils/useRecipe";
+import { useParams } from "react-router-dom";
+// import useRecipe from "../utils/useRecipe";
 
 import { RecipeType } from "../utils/Types";
 import {
@@ -8,28 +8,28 @@ import {
   UserBox,
   Badge,
   LoadingSpinner,
-  ShuffleArray,
+  // ShuffleArray,
   OutputIcon,
 } from "../utils/Utils";
 
 import Newsletter from "../components/Newsletter";
 import RecipeShortList from "../utils/RecipeShortList";
-import RecipeList from "../components/RecipeList";
+import ItemsList from "../components/ItemsList";
 
 import printer from "../assets/icons/printer.svg";
 import share from "../assets/icons/share.svg";
 import user_dp from "../assets/images/user_dp.png";
 import Timer from "../assets/icons/Timer.svg";
 import ForkKnife from "../assets/icons/ForkKnife.svg";
-import green_star from "../assets/images/green_star.svg";
-import green_food from "../assets/images/green_food.svg";
+import GreenCard from "../components/GreenCard";
+import RecipeSideList from "../utils/RecipeSideList";
 
 export default function RecipeDetails() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { recipeData } = useRecipe();
+  // const { recipeData } = useRecipe();
 
   const fetchRecipeDetails = useCallback(async () => {
     setIsLoading(true);
@@ -57,17 +57,12 @@ export default function RecipeDetails() {
     fetchRecipeDetails();
   }, [fetchRecipeDetails]);
 
-  const randomRecipes = ShuffleArray(recipeData).slice(0, 3);
-
   if (error) {
     return (
       <div className="flex flex-col justify-center items-center h-screen text-red-500">
-        <p>{error}</p>o
+        <p>{error}</p>
       </div>
     );
-  }
-  if (isLoading) {
-    <LoadingSpinner />;
   }
 
   return (
@@ -78,9 +73,9 @@ export default function RecipeDetails() {
         <div className="pb-20 overflow-y-scroll relative inter">
           <section className="relative flex justify-center items-center mt-10 gap-20">
             <div className="w-[95%] sm:w-[90%] flex flex-col justify-center items-center gap-5">
-              <div className="w-full flex flex-col sm:grid sm:grid-cols-4 md:grid-cols-3 justify-between gap-4 md:gap-6">
-                <div className="relative flex flex-col w-full col-span-3 sm:col-span-3 md:col-span-2 gap-6">
-                  <Heading text={recipe.name} customClass="mb-4 " />
+              <div className="w-full flex flex-col sm:grid sm:grid-cols-4 justify-between gap-4 md:gap-6">
+                <div className="relative flex flex-col w-full col-span-3 gap-6">
+                  <Heading text={recipe.name} customClass="mb-4 text-center sm:text-start" />
                   <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-2 md:gap-4 w-full">
                     <div className="grid grid-cols-2 sm:grid-cols-1 sm:gap-4 w-full">
                       <UserBox
@@ -126,7 +121,7 @@ export default function RecipeDetails() {
                 <div className="md:col-span-1 w-full overflow-hidden rounded-3xl">
                   <img
                     src={recipe.image}
-                    alt="recipe image"
+                    alt={recipe.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -169,59 +164,15 @@ export default function RecipeDetails() {
           <section className="flex justify-center items-center mt-20">
             <div className="w-[95%] sm:w-[90%] grid lg:grid-cols-3 gap-6 lg:gap-8">
               <div className="flex flex-col gap-10 col-span-1 lg:col-span-2">
-                <RecipeList items={recipe.ingredients} title="Ingredients" />
-                <RecipeList items={recipe.directions} title="Directions" />
+                <ItemsList items={recipe.ingredients} title="Ingredients" />
+                <ItemsList items={recipe.directions} title="Directions" />
               </div>
               <div className="col-span-1 grid md:grid-cols-2 lg:grid-cols-1 gap-16 w-full h-fit">
                 <div className="w-full">
                   <Heading text="Other Recipes" />
-                  <ul className="flex flex-col gap-5 mt-8">
-                    {randomRecipes.map((recipe) => {
-                      return (
-                        <Link
-                          to={`/recipes/${recipe.id}`}
-                          key={recipe.id}
-                          className="flex lg:grid lg:grid-cols-2 justify-start items-center gap-4"
-                        >
-                          <figure className="max-w-32 min-w-32 sm:max-w-36 md:min-w-40 md:max-w-40 lg:min-w-32 lg:max-w-44 rounded-xl lg:rounded-2xl overflow-hidden">
-                            <img
-                              src={recipe.image}
-                              alt={recipe.name}
-                              className="w-full h-full max-h-28 object-cover object-center hover:scale-[1.1] transition-all"
-                            />
-                          </figure>
-                          <div className="flex flex-col justify-between items-start gap-3">
-                            <p className="text-sm sm:text-base font-semibold hover:text-blue-500/70">
-                              {recipe.name}
-                            </p>
-                            <p className="text-xs sm:text-sm text-black/60">
-                              By John Smith{" "}
-                            </p>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </ul>
+                  <RecipeSideList />
                 </div>
-                <div
-                  className="relative flex justify-center items-center p-8 h-fit overflow-hidden"
-                  style={{
-                    background: "linear-gradient(to bottom, #336F53, #1E4B3D)",
-                  }}
-                >
-                  <img src={green_star} className="absolute z-[1] w-[120%]" />
-                  <div className="z-[2] flex flex-col justify-center items-center">
-                    <p className="max-w-40 text-center text-xl text-white lobster-regular">
-                      Don’t forget to eat healthy food
-                    </p>
-                    <figure>
-                      <img src={green_food} className="" />
-                    </figure>
-                    <p className="text-white/60 text-sm font-medium">
-                      www.foodieland.com
-                    </p>
-                  </div>
-                </div>
+                <GreenCard />
               </div>
             </div>
           </section>

@@ -2,7 +2,7 @@ import EditRecipeForm from "../components/EditRecipe";
 import useRecipe from "./useRecipe";
 
 import { useState } from "react";
-import { Heading, ShuffleArray } from "./Utils";
+import { Heading } from "./Utils";
 import RecipeCard from "../components/RecipeCard";
 import { RecipeType } from "./Types";
 
@@ -30,7 +30,7 @@ export default function RecipeShortList({
     setSelectedRecipe(null);
   }
 
-  // const randomRecipeList = ShuffleArray(recipeData).slice(0, 4)
+  // const randomItemsList = ShuffleArray(recipeData).slice(0, 4)
 
   return (
     <section className="flex justify-center items-center mt-10">

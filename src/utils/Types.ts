@@ -147,7 +147,24 @@ export interface StickyObjectProps {
   customClass: string;
 }
 
-export interface RecipeListProps {
+export interface ItemsListProps {
   title: string;
   items?: string[];
+};
+
+export interface BlogCardProps  {
+  id?: number;
+  title: string;
+  image?: string;
+  author?: string;
+  date?: string;
+  excerpt?: string;
+  content?: string | TrustedHTML;
+};
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  customStyle?: string;
 };

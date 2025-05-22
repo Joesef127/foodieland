@@ -1,7 +1,7 @@
-import { RecipeListProps } from "../utils/Types";
+import { ItemsListProps } from "../utils/Types";
 import { Heading } from "../utils/Utils";
 
-export default function RecipeList({ title, items }: RecipeListProps) {
+export default function ItemsList({ title, items }: ItemsListProps) {
   return (
     <div className="flex flex-col gap-6">
       <Heading text={title} />
