@@ -1,12 +1,13 @@
 import { useParams } from "react-router-dom";
-import { Heading, LoadingSpinner, UserBox } from "../utils/Utils";
+import { BaseUrl, Heading, LoadingSpinner, UserBox } from "../utils/Utils";
 import Newsletter from "../components/Newsletter";
 import RecipeShortList from "../utils/RecipeShortList";
 import { useState, useEffect } from "react";
-import { mockBlogPosts } from "../utils/MockBlogPosts";
 import { BlogCardProps } from "../utils/Types";
 import user_dp from "../assets/images/user_dp.png";
 import SocialMediaBox from "../components/SocialMediaBox";
+import { convertFromRaw } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
 export default function Blog() {
   const { id } = useParams<{ id: string }>(); // Get the blog ID from the URL
@@ -15,14 +16,14 @@ export default function Blog() {
   const [blog, setBlog] = useState<BlogCardProps | undefined>(undefined);
 
   useEffect(() => {
-    // Simulate fetching the blog post
     const fetchBlogPost = async () => {
       try {
         setIsLoading(true);
-        const blogPost = mockBlogPosts.find((post) => post.id === Number(id));
-        if (!blogPost) {
-          throw new Error("Blog post not found");
+        const response = await fetch(`${BaseUrl}blogs/${id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch blog details");
         }
+        const blogPost: BlogCardProps = await response.json();
         setBlog(blogPost);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -49,6 +50,17 @@ export default function Blog() {
       </div>
     );
   }
+
+  // Convert the raw content to HTML
+  const renderBlogContent = (rawContent: string) => {
+    try {
+      const contentState = convertFromRaw(JSON.parse(rawContent));
+      return stateToHTML(contentState);
+    } catch (err) {
+      console.error("Error rendering blog content:", err);
+      return "<p>Failed to render content.</p>";
+    }
+  };
 
   return (
     <>
@@ -77,7 +89,7 @@ export default function Blog() {
               </p>
               <figure className="w-full overflow-hidden rounded-3xl max-h-[507px]">
                 <img
-                  src={blog.image}
+                  src={blog.image || "https://via.placeholder.com/800x400"}
                   alt={blog.title}
                   className="w-full h-full object-cover object-center"
                 />
@@ -87,11 +99,12 @@ export default function Blog() {
                   {/* Render Blog Content Dynamically */}
                   <div className="py-4">
                     <h2 className="font-bold text-xl">Blog Content</h2>
-                    <div className="mt-4 text-gray-700 text-sm sm:text-base">
-                    {blog.content && (
-                      <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-                    )}
-                    </div>
+                    <div
+                      className="mt-4 text-gray-700 text-sm sm:text-base"
+                      dangerouslySetInnerHTML={{
+                        __html: renderBlogContent(blog.content || ""),
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="flex flex-col justify-start items-center gap-3">

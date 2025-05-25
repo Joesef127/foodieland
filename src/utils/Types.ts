@@ -159,7 +159,7 @@ export interface BlogCardProps  {
   author?: string;
   date?: string;
   excerpt?: string;
-  content?: string | TrustedHTML;
+  content?: string;
 };
 
 export interface PaginationProps {

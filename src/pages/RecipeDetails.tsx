@@ -10,6 +10,7 @@ import {
   LoadingSpinner,
   // ShuffleArray,
   OutputIcon,
+  BaseUrl,
 } from "../utils/Utils";
 
 import Newsletter from "../components/Newsletter";
@@ -34,7 +35,7 @@ export default function RecipeDetails() {
   const fetchRecipeDetails = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000/recipes/${id}`);
+      const res = await fetch(`${BaseUrl}recipes/${id}`);
       if (!res.ok) {
         throw new Error("Failed to fetch recipe details");
       }
