@@ -19,7 +19,7 @@ export interface RecipeCardType {
   isFavorite: boolean;
   bgColor?: string;
   customClass?: string;
-  handleDeleteRecipe?: () => void;
+  handleDeleteItem?: () => void;
   handleOpenEditForm?: () => void;
   handleToggleFavorite?: () => void;
 }
@@ -119,7 +119,7 @@ export interface CategoryItemProps {
 }
 
 export interface DropdownProps {
-  handleDeleteRecipe: () => void;
+  handleDeleteItem: () => void;
   handleOpenEditForm?: () => void;
 }
 
@@ -160,6 +160,8 @@ export interface BlogCardProps  {
   date?: string;
   excerpt?: string;
   content?: string;
+  handleDeleteItem?: () => void;
+  handleOpenEditForm?: () => void
 };
 
 export interface PaginationProps {

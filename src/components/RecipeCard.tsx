@@ -17,7 +17,7 @@ const Recipe = React.memo(
     isFavorite,
     bgColor,
     customClass,
-    handleDeleteRecipe,
+    handleDeleteItem,
     handleOpenEditForm,
     handleToggleFavorite,
   }: RecipeCardType) => {
@@ -64,7 +64,7 @@ const Recipe = React.memo(
 
         <div className="absolute bottom-4 right-2">
           <Dropdown
-            handleDeleteRecipe={handleDeleteRecipe || (() => {})}
+            handleDeleteItem={handleDeleteItem || (() => {})}
             handleOpenEditForm={handleOpenEditForm || (() => {})}
           />
         </div>

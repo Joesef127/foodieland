@@ -126,7 +126,7 @@ function App() {
                     time={recipe.time}
                     category={recipe.category}
                     isFavorite={recipe.isFavorite}
-                    handleDeleteRecipe={() => deleteRecipe(recipe.id)}
+                    handleDeleteItem={() => deleteRecipe(recipe.id)}
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
                     handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     customClass="p-2.5"
@@ -288,7 +288,7 @@ function App() {
                     time={recipe.time}
                     category={recipe.category}
                     isFavorite={recipe.isFavorite}
-                    handleDeleteRecipe={() => deleteRecipe(recipe.id)}
+                    handleDeleteItem={() => deleteRecipe(recipe.id)}
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
                     handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     customClass="p-2.5"

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { BlogCardProps } from "../utils/Types";
+import { Dropdown } from "../utils/Utils";
 
 export default function BlogCard({
   id,
@@ -8,17 +9,19 @@ export default function BlogCard({
   author,
   date,
   excerpt,
+  handleDeleteItem,
+  handleOpenEditForm,
 }: BlogCardProps) {
   return (
     <div
       key={id}
-      className="flex flex-col sm:flex-row gap-4 items-center rounded-2xl p-2 sm:p-4 bg-white shadow-md hover:shadow-lg transition-shadow"
+      className="relative flex flex-col sm:flex-row gap-4 items-center rounded-2xl p-2 sm:p-4 bg-white shadow-md hover:shadow-lg transition-shadow"
     >
       <Link to={`/blog/${id}`}>
         <figure className="relative h-fit size-64 sm:max-w-36 md:min-w-40 md:max-w-40 lg:min-w-32 lg:max-w-44 rounded-xl lg:rounded-2xl overflow-hidden">
           <img
             src={image}
-            alt={title}
+            alt={image}
             className="w-full h-full object-cover hover:scale-[1.1] transition-transform"
           />
         </figure>
@@ -31,13 +34,20 @@ export default function BlogCard({
           >
             {title}
           </Link>
-          <p className="text-xs sm:text-sm text-center sm:text-start text-gray-700">
+          <p className="text-xs sm:text-sm text-center sm:text-start text-gray-700 max-w-[95%]">
             {excerpt}
           </p>
         </div>
         <p className="text-sm text-gray-500 text-center sm:text-start w-full">
           By {author} • {date}
         </p>
+      </div>
+
+      <div className="absolute bottom-[45%] right-2">
+        <Dropdown
+          handleDeleteItem={handleDeleteItem || (() => {})}
+          handleOpenEditForm={handleOpenEditForm || (() => {})}
+        />
       </div>
     </div>
   );

@@ -1,28 +1,29 @@
 import { useState } from "react";
-import {
-  Button,
-  Heading,
-  LoadingSpinner,
-  SubHeading,
-} from "../utils/Utils";
+import { Button, Heading, LoadingSpinner, SubHeading } from "../utils/Utils";
 import Newsletter from "../components/Newsletter";
 import BlogCard from "../components/BlogCard";
 import Pagination from "../utils/Pagination";
 import GreenCard from "../components/GreenCard";
 import RecipeSideList from "../utils/RecipeSideList";
 import AddBlog from "../components/AddBlog";
-import useBlog from "../utils/useBlog"; // Import the useBlog hook
+import useBlog from "../utils/useBlog"; 
+import { BlogCardProps } from "../utils/Types";
+import EditBlog from "../components/EditBlog";
 
 export default function BlogList() {
   const {
     blogData,
     isLoading,
     error,
+    deleteExistingBlog,
     // fetchAllBlogs,
-    // addNewBlog,
-  } = useBlog(); // Use the useBlog hook
+  } = useBlog(); 
 
-  const [showAddBlog, setShowAddBlog] = useState<boolean>(false);
+  const [showEditForm, setShowEditForm] = useState<boolean>(false);
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
+  const [selectedBlog, setSelectedBlog] = useState<BlogCardProps | null>(
+    null
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 8;
 
@@ -31,14 +32,30 @@ export default function BlogList() {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = blogData.slice(indexOfFirstPost, indexOfLastPost);
 
+  // useEffect (() => {
+  //   fetchAllBlogs()
+  // }, [])
+
   // Handle opening the Add Blog modal
   function handleOpenAddBlog() {
-    setShowAddBlog(true);
+    setShowAddForm(true);
   }
 
   // Handle closing the Add Blog modal
   function handleCloseAddBlog() {
-    setShowAddBlog(false);
+    setShowAddForm(false);
+  }
+
+  // Handle opening the edit modal
+  function handleOpenEditForm(blog: BlogCardProps) {
+    setSelectedBlog(blog);
+    setShowEditForm(true);
+  }
+
+  // Handle closing the edit modal
+  function handleCloseEditForm() {
+    setSelectedBlog(null);
+    setShowEditForm(false);
   }
 
   // Add a new blog
@@ -89,13 +106,15 @@ export default function BlogList() {
               ) : (
                 currentPosts.map((post, index) => (
                   <BlogCard
+                    key={index}
                     id={post.id}
                     author={post.author}
                     date={post.date}
                     excerpt={post.excerpt}
                     image={post.image}
                     title={post.title}
-                    key={index}
+                    handleDeleteItem={() => deleteExistingBlog(post.id)}
+                    handleOpenEditForm={() => handleOpenEditForm(post)}
                   />
                 ))
               )}
@@ -138,8 +157,13 @@ export default function BlogList() {
         </div>
 
         {/* Add Blog Modal */}
-        {showAddBlog && (
-          <AddBlog handleForm={handleCloseAddBlog} />
+        {showAddForm && <AddBlog handleForm={handleCloseAddBlog} />}
+
+        {showEditForm && (
+          <EditBlog
+            handleForm={handleCloseEditForm}
+            initialBlog={selectedBlog}
+          />
         )}
       </div>
     </>

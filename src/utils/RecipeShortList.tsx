@@ -51,7 +51,7 @@ export default function RecipeShortList({
                   category={recipe.category}
                   isFavorite={recipe.isFavorite}
                   handleToggleFavorite={() => toggleFavorite(recipe.id)}
-                  handleDeleteRecipe={() => deleteRecipe(recipe.id)}
+                  handleDeleteItem={() => deleteRecipe(recipe.id)}
                   handleOpenEditForm={() => handleOpenEditForm(recipe)}
                 />
               ))}

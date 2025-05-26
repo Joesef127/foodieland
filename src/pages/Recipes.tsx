@@ -36,7 +36,8 @@ export default function Recipes() {
     const filtered = recipeData.filter((recipe) => {
       const matchesFavorites = !showFavorites || recipe.isFavorite;
       const matchesCategory =
-        selectedCategory === "all" || recipe.category.toLowerCase() === selectedCategory.toLowerCase();
+        selectedCategory === "all" ||
+        recipe.category.toLowerCase() === selectedCategory.toLowerCase();
       const matchesTime =
         selectedTime === "all" ||
         (selectedTime === "<30mins" && recipe.time < 30) ||
@@ -53,7 +54,7 @@ export default function Recipes() {
     });
 
     setFilteredRecipes(filtered);
-    setCurrentPage(1); // Reset to the first page when filters change
+    setCurrentPage(1);
   }, [
     selectedCategory,
     selectedTime,
@@ -71,24 +72,20 @@ export default function Recipes() {
 
   const totalPages = Math.ceil(filteredRecipes.length / recipesPerPage);
 
-  // Handle opening the edit modal
   function handleOpenEditForm(recipe: RecipeType) {
     setSelectedRecipe(recipe);
     setShowEditForm(true);
   }
 
-  // Handle closing the edit modal
   function handleCloseEditForm() {
     setSelectedRecipe(null);
     setShowEditForm(false);
   }
 
-  // Handle opening the add modal
   function handleOpenAddForm() {
     setShowAddForm(true);
   }
 
-  // Handle closing the add modal
   function handleCloseAddForm() {
     setShowAddForm(false);
   }
@@ -115,7 +112,6 @@ export default function Recipes() {
             />
           </div>
 
-          {/* Filters */}
           <div className="w-full flex flex-col sm:flex-row sm:justify-center sm:items-baseline gap-4 sm:gap-8">
             <div className="flex flex-col">
               <SelectDropdown
@@ -142,7 +138,6 @@ export default function Recipes() {
               />
             </div>
 
-            {/* Favorites Filter Button */}
             <div className="flex flex-col">
               <h5 className={`block `}>Filter by favorites</h5>
               <button
@@ -154,14 +149,16 @@ export default function Recipes() {
             </div>
           </div>
 
-          {/* Recipes List */}
           {isLoading ? (
             <LoadingSpinner />
           ) : error ? (
             <div className="text-center text-red-500">{error}</div>
           ) : currentRecipes.length > 0 ? (
             <div className="flex flex-col justify-center items-center">
-              <Button text={"Add New Recipe"} customFunction={handleOpenAddForm} />
+              <Button
+                text={"Add New Recipe"}
+                customFunction={handleOpenAddForm}
+              />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-2.5 mt-10">
                 {currentRecipes.map((recipe) => (
@@ -173,7 +170,7 @@ export default function Recipes() {
                     time={recipe.time}
                     category={recipe.category}
                     isFavorite={recipe.isFavorite}
-                    handleDeleteRecipe={() => deleteRecipe(recipe.id)} 
+                    handleDeleteItem={() => deleteRecipe(recipe.id)}
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
                     handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     bgColor="#E7FAFE"
@@ -187,7 +184,6 @@ export default function Recipes() {
             </div>
           )}
 
-          {/* Pagination */}
           {filteredRecipes.length > recipesPerPage && (
             <Pagination
               currentPage={currentPage}
@@ -198,7 +194,6 @@ export default function Recipes() {
         </div>
       </section>
 
-      {/* Edit Recipe Form */}
       {showEditForm && (
         <EditRecipeForm
           handleForm={handleCloseEditForm}
@@ -207,7 +202,6 @@ export default function Recipes() {
         />
       )}
 
-      {/* Add Recipe Form */}
       {showAddForm && (
         <AddRecipeForm
           AddRecipe={async (recipe) => {
@@ -226,13 +220,13 @@ const categoryOptions = [
   { id: "breakfast", name: "Breakfast" },
   { id: "snack", name: "Snack" },
   { id: "seafood", name: "Seafood" },
-  { id: "italian", name: "Italian" }, 
-  { id: "salad", name: "Salad" },     
-  { id: "appetizer", name: "Appetizer" }, 
-  { id: "dessert", name: "Dessert" }, 
-  { id: "asian", name: "Asian" },     
-  { id: "mexican", name: "Mexican" }, 
-  { id: "vegan", name: "Vegan" },     
+  { id: "italian", name: "Italian" },
+  { id: "salad", name: "Salad" },
+  { id: "appetizer", name: "Appetizer" },
+  { id: "dessert", name: "Dessert" },
+  { id: "asian", name: "Asian" },
+  { id: "mexican", name: "Mexican" },
+  { id: "vegan", name: "Vegan" },
   { id: "healthy", name: "Healthy" },
   { id: "meat", name: "Meat" },
   { id: "noodles", name: "Noodles" },

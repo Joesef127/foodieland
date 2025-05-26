@@ -58,7 +58,7 @@ export default function Blog() {
       return stateToHTML(contentState);
     } catch (err) {
       console.error("Error rendering blog content:", err);
-      return "<p>Failed to render content.</p>";
+      return <p>Failed to render content.</p>
     }
   };
 
@@ -89,8 +89,8 @@ export default function Blog() {
               </p>
               <figure className="w-full overflow-hidden rounded-3xl max-h-[507px]">
                 <img
-                  src={blog.image || "https://via.placeholder.com/800x400"}
-                  alt={blog.title}
+                  src={blog.image}
+                  alt={blog.image}
                   className="w-full h-full object-cover object-center"
                 />
               </figure>
