@@ -6,7 +6,7 @@ import Pagination from "../utils/Pagination";
 import GreenCard from "../components/GreenCard";
 import RecipeSideList from "../utils/RecipeSideList";
 import AddBlog from "../components/AddBlog";
-import useBlog from "../utils/useBlog";
+import useBlog from "../hooks/useBlog";
 import { BlogCardProps } from "../utils/Types";
 import EditBlog from "../components/EditBlog";
 

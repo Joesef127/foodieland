@@ -31,7 +31,8 @@ import Newsletter from "./components/Newsletter";
 import EditRecipeForm from "./components/EditRecipe";
 import HeroSection from "./components/HomeHeroSection";
 
-import useRecipe from "./utils/useRecipe";
+import useRecipe from "./hooks/useRecipe";
+import useAOS from "./hooks/useAOS";
 function App() {
   const {
     recipeData,
@@ -60,6 +61,12 @@ function App() {
     { image: post4, name: "Post 4" },
   ];
 
+  useAOS({
+    duration: 500,
+    easing: "ease-in-out",
+    once: false,
+  });
+
   function handleOpenEditForm(recipe: RecipeType) {
     setSelectedRecipe(recipe);
     setShowEditForm(true);
@@ -70,19 +77,22 @@ function App() {
     setShowEditForm(false);
   }
 
-
   return (
     <div className="pt-10 pb-40 overflow-y-scroll relative inter">
       <HeroSection />
 
       <section className="flex justify-center items-center mt-40">
         <div className="w-[95%] sm:w-[90%] flex flex-col gap-18">
-          <div className="flex justify-between items-center mb-10">
-            <Heading text="Categories" />
+          <div
+            className="flex justify-between items-center mb-10"
+            
+          >
+            <Heading text="Categories" animation="fade-right" />
 
             <Button
               text="View All Categories"
               customClass="bg-[#E7FAFE] text-black shadow-md hover:bg-[#D1F1F5]"
+              animation="fade-left"
             />
           </div>
 
@@ -94,6 +104,7 @@ function App() {
                   image={category.image}
                   name={category.name}
                   bgColor={category.bgColor}
+                  animation={index % 2 === 0 ? "fade-up" : "fade-down"}
                 />
               ))}
           </div>
@@ -103,11 +114,12 @@ function App() {
       <section className="relative flex justify-center items-center mt-40 gap-20">
         <div className="w-[95%] sm:w-[90%] flex flex-col justify-center items-center gap-18">
           <div className="flex flex-col justify-between items-center">
-            <Heading text="Simple and tasty recipes" customClass="mb-6" />
+            <Heading text="Simple and tasty recipes" customClass="mb-6" animation="fade-left" />
             <SubHeading
               text="Explore a variety of delicious recipes that we offer. We have a
             variety of recipes that are easy to make and delicious to eat."
-              customClass="text-center text-gray-500"
+              customClass="text-center text-gray-500" 
+              animation="fade-right"
             />
           </div>
 
@@ -131,6 +143,9 @@ function App() {
                     handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     customClass="p-2.5"
                     bgColor="#E7FAFE"
+                    animation={
+                      recipe.id % 2 === 0 ? "fade-up" : "fade-down"
+                    }
                   />
                 ))}
           </div>
@@ -155,11 +170,13 @@ function App() {
               <Heading
                 text="Everyone can be a chef in their own kitchen"
                 customClass="tracking-tight max-w-[90%]"
+                animation="fade-left"
               />
               <SubHeading
                 text="Explore a variety of delicious recipes that we offer. We have a
             variety of recipes that are easy to make and delicious to eat."
                 customClass="max-w-[90%] text-gray-500"
+                animation="fade-right"
               />
             </div>
 
@@ -167,6 +184,7 @@ function App() {
               text="Learn More"
               textColor="text-white"
               customClass="bg-black"
+              animation="fade-up" 
             />
           </div>
 
@@ -175,11 +193,14 @@ function App() {
             style={{
               background: "linear-gradient(to bottom, white, #EDFAFD)",
             }}
+            data-aos="fade-left"
           >
             <img
               src={happy_chef}
               alt="Happy chef with fruits"
               className="-ml-28"
+            data-aos="fade-left"
+            data-aos-delay="300"
             />
             <StickyObject image={tomato} customClass=" bottom-1/5 -left-5" />
             <StickyObject image={beef} customClass="top-1 left-1/10" />
@@ -199,11 +220,14 @@ function App() {
             <Heading
               text="Join our community"
               customClass="mb-6 text-white text-center max-w-5/6"
+              animation="fade-up"
             />
             <SubHeading
               text="Join our community of food lovers and share your favorite recipes
             with us. We can't wait to see what you create!"
               customClass="text-center text-white max-w-5/6"
+              animation="fade-up"
+              data-aos-delay="300"
             />
           </div>
 
@@ -212,6 +236,8 @@ function App() {
               text="Join Now"
               textColor="text-black"
               customClass="bg-white"
+              animation="fade-up"
+              data-aos-delay="500"
             />
           </div>
         </div>
@@ -228,11 +254,14 @@ function App() {
             <Heading
               text="Check out @foodieland on Instagram"
               customClass="text-center"
+              animation="fade-right"
             />
             <SubHeading
               text="Follow us on Instagram for the latest updates and recipes. We
               post daily recipes and tips to help you cook like a pro."
               customClass="text-center text-gray-500"
+              animation="fade-left"
+              data-aos-delay="300"
             />
           </div>
           <div className="  flex flex-col justify-center items-center gap-16">
@@ -244,6 +273,8 @@ function App() {
                       src={post.image}
                       alt={post.name}
                       className="rounded-xl shadow-md max-w-64"
+                      data-aos={index % 2 === 0 ? "fade-up" : "fade-down"}
+                      data-aos-delay={index * 100}
                     />
                   </div>
                 ))}
@@ -254,6 +285,7 @@ function App() {
               icon={instagram_white}
               textColor="text-white"
               customClass="bg-black"
+              animation="fade-up"
             />
           </div>
         </div>
@@ -265,12 +297,15 @@ function App() {
             <Heading
               text="Try this delicious recipe to make your day"
               customClass="w-full"
+              animation="fade-right"
             />
             <SubHeading
               text="Discover new flavors and enjoy cooking with our easy-to-follow recipes. 
                   Whether you're a beginner or an experienced chef, our recipes are designed 
                   to inspire creativity in the kitchen."
               customClass="w-full text-gray-500"
+              animation="fade-left"
+              data-aos-delay="300"
             />
           </div>
 
@@ -292,6 +327,10 @@ function App() {
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
                     handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     customClass="p-2.5"
+                    animation={
+                      recipe.id % 2 === 0 ? "fade-up" : "fade-down"
+                    }
+                    data-aos-delay={100}
                   />
                 ))}
           </div>

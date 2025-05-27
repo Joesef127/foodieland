@@ -1,9 +1,12 @@
 import SocialMediaBox from "./SocialMediaBox";
 import foodieland_logo from "../assets/foodieland_logo.svg";
 import { NavLink } from "react-router-dom";
+import useAOS from "../hooks/useAOS";
 
 export default function Footer() {
   const currentYear: number = new Date().getFullYear();
+  useAOS();
+
   return (
     <footer className="flex flex-col justify-center items-center w-full bg-white py-8">
       <div className="w-[90%] max-w-[1440px] flex flex-col justify-between items-center">
@@ -14,39 +17,30 @@ export default function Footer() {
                 src={foodieland_logo}
                 alt="foodieland"
                 className="w-24 md:w-28"
+                data-aos="fade-right"
               />
             </figure>
-            <p className="text-sm md:text-base text-gray-500 max-w-full">
+            <p
+              className="text-sm md:text-base text-gray-500 max-w-full"
+              data-aos="fade-right"
+            >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Discover
               the best recipes and culinary tips.
             </p>
           </div>
 
-          <nav className="flex flex-wrap justify-start items-center md:justify-end gap-6 text-sm md:text-base">
-            <NavLink
-              to={"/recipes"}
-              className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors"
-            >
-              Recipes
-            </NavLink>
-            <NavLink
-              to={"/blog"}
-              className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors"
-            >
-              Blog
-            </NavLink>
-            <NavLink
-              to={"/contact"}
-              className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors"
-            >
-              Contact
-            </NavLink>
-            <NavLink
-              to={"/about"}
-              className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors"
-            >
-              About us
-            </NavLink>
+          <nav className="flex flex-wrap justify-start items-center md:justify-end gap-6 text-sm md:text-base" data-aos="fade-left">
+            {["recipes", "blog", "contact", "about"].map((nav, index) => {
+              return (
+                <NavLink
+                  key={index}
+                  to={`/${nav}`}
+                  className="text-gray-800 hover:text-indigo-600 focus:text-indigo-600 transition-colors cursor-pointer capitalize"
+                >
+                  {nav}
+                </NavLink>
+              );
+            })}
           </nav>
         </div>
 

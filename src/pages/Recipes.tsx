@@ -4,7 +4,7 @@ import RecipeCard from "../components/RecipeCard";
 import Pagination from "../utils/Pagination";
 import { RecipeType } from "../utils/Types";
 import SelectDropdown from "../utils/SelectDropdown";
-import useRecipe from "../utils/useRecipe";
+import useRecipe from "../hooks/useRecipe";
 import EditRecipeForm from "../components/EditRecipe";
 import AddRecipeForm from "../components/AddRecipe";
 

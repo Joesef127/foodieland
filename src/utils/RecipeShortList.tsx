@@ -1,5 +1,5 @@
 import EditRecipeForm from "../components/EditRecipe";
-import useRecipe from "./useRecipe";
+import useRecipe from "../hooks/useRecipe";
 
 import { useState } from "react";
 import { Heading } from "./Utils";

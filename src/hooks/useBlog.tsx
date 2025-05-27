@@ -5,8 +5,8 @@ import {
   addBlog,
   editBlog,
   deleteBlog,
-} from "./BlogCrud"; 
-import { BlogCardProps } from "./Types"; 
+} from "../utils/BlogCrud"; 
+import { BlogCardProps } from "../utils/Types"; 
 
 const useBlog = () => {
   const [blogData, setBlogData] = useState<BlogCardProps[]>([]);

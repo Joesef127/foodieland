@@ -5,7 +5,7 @@ import heart_fill from "../assets/icons/heart_fill.svg";
 import heart_blank from "../assets/icons/heart_blank.svg";
 import { Link } from "react-router-dom";
 import { RecipeCardType } from "../utils/Types";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Recipe = React.memo(
   ({
@@ -20,7 +20,12 @@ const Recipe = React.memo(
     handleDeleteItem,
     handleOpenEditForm,
     handleToggleFavorite,
+    animation,
   }: RecipeCardType) => {
+
+    
+
+
     return (
       <div
         className={`relative flex flex-col justify-between gap-4 rounded-2xl p-3 w-full h-full max-w-80 max-h-96 cursor-pointer ${customClass}`}
@@ -29,6 +34,7 @@ const Recipe = React.memo(
             bgColor ? bgColor : "transparent"
           })`,
         }}
+        data-aos={animation}
       >
         <div className="flex flex-col gap-4 ">
           <figure className="relative overflow-hidden rounded-2xl max w-full md:h-36 max-h-48 xl:h-48">

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useRecipe from "./useRecipe";
+import useRecipe from "../hooks/useRecipe";
 import { ShuffleArray } from "./Utils";
 
 export default function RecipeSideList() {

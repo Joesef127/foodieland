@@ -5,8 +5,8 @@ import {
   handleEditRecipe,
   handleDeleteRecipe,
   handleToggleFavorite,
-} from "./RecipeCrud";
-import { RecipeType } from "./Types";
+} from "../utils/RecipeCrud";
+import { RecipeType } from "../utils/Types";
 
 const useRecipe = () => {
   const [recipeData, setRecipeData] = useState<RecipeType[]>([]);

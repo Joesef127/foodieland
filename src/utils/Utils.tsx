@@ -13,6 +13,7 @@ import {
   UserType,
 } from "./Types";
 import { formatDate } from "./utilFunctions";
+// import useAOS from "../hooks/useAOS";
 
 export const BaseUrl = "http://localhost:8000/";
 
@@ -88,13 +89,15 @@ export const UserBox = ({
   );
 };
 
-export const CategoryItem = ({ image, name, bgColor }: CategoryItemProps) => {
+export const CategoryItem = ({ image, name, animation, bgColor }: CategoryItemProps) => {
+  
   return (
     <div
       className={`flex flex-col justify-center items-center w-full gap-4 md:gap-6 lg:gap-8 py-5 px-8 rounded-3xl shadow-md`}
       style={{
         background: `linear-gradient(to bottom, white, ${bgColor})`,
       }}
+      data-aos={animation}
     >
       <figure>
         <img
@@ -115,6 +118,7 @@ export const Button = ({
   customClass,
   type,
   customFunction,
+  animation,
 }: ButtonProps) => {
   return (
     <button
@@ -122,6 +126,7 @@ export const Button = ({
       aria-label={text}
       onClick={customFunction}
       type={type}
+      data-aos={animation}  
     >
       <span className={`${textColor}`}>{text}</span>
       {icon && <img src={icon} alt={text} />}
@@ -129,20 +134,21 @@ export const Button = ({
   );
 };
 
-export const Heading = ({ text, customClass }: HeadingProps) => {
+export const Heading = ({ text, animation, customClass }: HeadingProps) => {
   return (
     <h1
-      className={`font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl ${customClass}`}
+      className={`font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-5xl ${customClass}`} data-aos={animation}
     >
       {text}
     </h1>
   );
 };
 
-export const SubHeading = ({ text, customClass }: SubHeadingProps) => {
+export const SubHeading = ({ text, animation, customClass }: SubHeadingProps) => {
   return (
     <h2
       className={`font-normal text-xs sm:text-sm lg:text-base ${customClass}`}
+      data-aos={animation}
     >
       {text}
     </h2>

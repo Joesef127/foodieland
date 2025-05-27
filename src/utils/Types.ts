@@ -19,6 +19,7 @@ export interface RecipeCardType {
   isFavorite: boolean;
   bgColor?: string;
   customClass?: string;
+  animation?: string;
   handleDeleteItem?: () => void;
   handleOpenEditForm?: () => void;
   handleToggleFavorite?: () => void;
@@ -115,6 +116,7 @@ export interface CategoryItemProps {
   image: string;
   name: string;
   bgColor: string;
+  animation?: string;
 }
 
 export interface DropdownProps {
@@ -124,16 +126,19 @@ export interface DropdownProps {
 
 export interface HeadingProps {
   text: string;
+  animation?: string;
   customClass?: string;
 }
 
 export interface SubHeadingProps {
   text: string;
+  animation?: string;
   customClass?: string;
 }
 
 export interface ButtonProps {
   text: string;
+  animation?: string;
   icon?: string;
   textColor?: string;
   customClass?: string;
