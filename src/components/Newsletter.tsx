@@ -1,4 +1,4 @@
-import { Heading, SubHeading, Button } from "../utils/Utils";
+import { Heading, SubHeading } from "../utils/Utils";
 import food20 from "../assets/images/food20.png";
 import two_fork_salad from "../assets/images/two_fork_salad.png";
 
@@ -18,25 +18,36 @@ export default function Newsletter() {
           />
         </div>
 
-        <form className="flex justify-between items-center gap-2.5 py-4 px-6 bg-white rounded-2xl lg:w-4/10">
-          <input
-            type="email"
-            placeholder="Your email address"
-            className="text-xs sm:text-sm md:text-base leading-normal text-gray-700 max-w-[70%] outline-0"
-          />
-          <Button
+        <form className="grid grid-cols-4 justify-between items-center rounded-lg overflow-hidden lg:w-4/10">
+          <div className="bg-white flex justify-between items-center py-4 px-6 w-full h-full col-span-3">
+            <input
+              type="email"
+              placeholder="Your email address"
+              className="text-xs sm:text-sm md:text-base leading-normal text-gray-700 outline-0 w-full h-full placeholder:text-gray-400"
+            />
+          </div>
+          {/* <Button
             text="Join Now"
             type="submit"
             textColor="text-white"
-            customClass="bg-black"
-          />
+            customClass="bg-black px-4 py-0 rounded-lg text-xs sm:text-sm md:text-base"
+          /> */}
+          <button type="submit" className="h-full bg-black px-3 py-2 text-xs sm:text-sm text-white"> Join</button>
         </form>
 
         <figure>
-          <img src={two_fork_salad} alt="salad" className="absolute w-40 sm:w-60 lg:w-96 -bottom-20 -left-10 lg:-bottom-40 lg:-left-20" />
+          <img
+            src={two_fork_salad}
+            alt="salad"
+            className="absolute w-40 sm:w-60 lg:w-96 -bottom-20 -left-10 lg:-bottom-40 lg:-left-20"
+          />
         </figure>
         <figure>
-          <img src={food20} alt="salad" className="absolute w-40 sm:w-60 lg:w-96 -bottom-20 -right-10 lg:-bottom-40 lg:-right-20" />
+          <img
+            src={food20}
+            alt="salad"
+            className="absolute w-40 sm:w-60 lg:w-96 -bottom-20 -right-10 lg:-bottom-40 lg:-right-20"
+          />
         </figure>
       </div>
     </section>

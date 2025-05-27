@@ -7,9 +7,7 @@ export default function Footer() {
   return (
     <footer className="flex flex-col justify-center items-center w-full bg-white py-8">
       <div className="w-[90%] max-w-[1440px] flex flex-col justify-between items-center">
-        
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-6">
-
           <div className="flex flex-col items-start gap-4 md:text-left">
             <figure>
               <img
@@ -23,7 +21,6 @@ export default function Footer() {
               the best recipes and culinary tips.
             </p>
           </div>
-
 
           <nav className="flex flex-wrap justify-start items-center md:justify-end gap-6 text-sm md:text-base">
             <NavLink
@@ -51,24 +48,26 @@ export default function Footer() {
               About us
             </NavLink>
           </nav>
-
         </div>
 
-        
         <div className="relative w-full flex flex-col sm:flex-row justify-center items-center gap-4 border-t border-gray-200 pt-4 mt-4">
-        
           <div className="text-center md:text-left text-sm md:text-base text-gray-500">
             <p>
-              &copy; {currentYear} AdeDev Solutions. Developed by{" "}
-              <span className="text-[#FF7967]">AdeDevSolutions</span>.
+              &copy; {currentYear}
+              <a
+                href="https://www.github.com/joesef127/"
+                className="text-[#FF7967]"
+              >
+                {" "}
+                AdeDev Solutions.
+              </a>{" "}
+              All Rights Reserved.
             </p>
           </div>
 
-        
           <div className="flex justify-center md:justify-end sm:absolute sm:right-0">
             <SocialMediaBox />
           </div>
-
         </div>
       </div>
     </footer>
