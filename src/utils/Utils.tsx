@@ -10,8 +10,8 @@ import {
   RecipeType,
   StickyObjectProps,
   SubHeadingProps,
-  UserType,
 } from "./Types";
+import { formatDate } from "./utilFunctions";
 
 export const BaseUrl = "http://localhost:8000/";
 
@@ -46,50 +46,38 @@ export const Badge = ({
 
 export const UserBox = ({
   userPic,
-  user,
+  userName,
   customStyle,
   dateStyle,
+  nameStyle,
   imageStyle,
-  nameStyle
+  postDate,
 }: {
   userPic?: string;
-  user?: UserType;
+  userName?: string;
   customStyle?: string;
   dateStyle?: string;
   nameStyle?: string;
   imageStyle?: string;
+  postDate?: string;
 }) => {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const currentMonthInString = (date: Date) => months[date.getMonth()];
-  const date = new Date();
   return (
     <div className={`flex items-center gap-2 lg:gap-4 ${customStyle}`}>
-      <figure className={`overflow-hidden rounded-full max-w-10 max-h-10 lg:max-w-14 lg:max-h-14 border border-black ${imageStyle}`}>
-        <img src={user?.profilePicture || userPic} alt="User pic" />
+      <figure
+        className={`overflow-hidden rounded-full max-w-10 max-h-10 lg:max-w-14 lg:max-h-14 border border-black ${imageStyle}`}
+      >
+        <img src={userPic} alt="User pic" />
       </figure>
       <div>
-        <h3 className={`mb-1 sm:mb-2 font-bold text-xs sm:text-sm lg:text-base ${nameStyle}`}>
-          {user?.name || "John Smith"}
+        <h3
+          className={`mb-1 sm:mb-2 font-bold text-xs sm:text-sm lg:text-base ${nameStyle}`}
+        >
+          {userName || "John Smith"}
         </h3>
         <p className={`text-xs sm:text-sm font-medium ${dateStyle}`}>
-          {`
-                  ${date.getDate()} 
-                  ${currentMonthInString(date)} 
-                  ${date.getFullYear()}
-                `}
+          {postDate
+            ? formatDate(postDate)
+            : formatDate(new Date().toISOString())}
         </p>
       </div>
     </div>

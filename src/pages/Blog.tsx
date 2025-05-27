@@ -10,7 +10,7 @@ import { convertFromRaw } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 
 export default function Blog() {
-  const { id } = useParams<{ id: string }>(); // Get the blog ID from the URL
+  const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [blog, setBlog] = useState<BlogCardProps | undefined>(undefined);
@@ -51,14 +51,13 @@ export default function Blog() {
     );
   }
 
-  // Convert the raw content to HTML
   const renderBlogContent = (rawContent: string) => {
     try {
       const contentState = convertFromRaw(JSON.parse(rawContent));
       return stateToHTML(contentState);
     } catch (err) {
       console.error("Error rendering blog content:", err);
-      return <p>Failed to render content.</p>
+      return <p>Failed to render content.</p>;
     }
   };
 
@@ -75,12 +74,14 @@ export default function Blog() {
                     userPic={user_dp}
                     customStyle="pr-6 flex-row justify-center items-center border-r sm:border-b sm:border-b-0 border-black/20"
                     dateStyle="hidden"
+                    userName={blog.author}
                   />
                   <UserBox
                     userPic={user_dp}
                     customStyle="flex-row justify-start items-center sm:border-b sm:border-b-0 border-black/20 text-black/60 mb-2"
                     nameStyle="hidden"
                     imageStyle="hidden"
+                    postDate={blog.date}
                   />
                 </div>
               </div>

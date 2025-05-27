@@ -6,17 +6,20 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import RichTextEditor from "./RichTextEditor";
-import useBlog from "../utils/useBlog";
 import { BlogCardProps } from "../utils/Types";
 
 export default function EditBlog({
   handleForm,
   initialBlog,
+  editExistingBlog,
 }: {
   handleForm: () => void;
   initialBlog: BlogCardProps | null;
+  editExistingBlog: (
+    id: number,
+    updatedBlog: BlogCardProps
+  ) => Promise<void | BlogCardProps>;
 }) {
-  const { editExistingBlog, fetchSingleBlog } = useBlog(); 
   const [error, setError] = useState<string>("");
   const [blog, setBlog] = useState<BlogCardProps>(
     initialBlog || {
@@ -32,73 +35,22 @@ export default function EditBlog({
   async function handleEditBlog(e: React.FormEvent) {
     e.preventDefault();
     if (blog.title && blog.excerpt && blog.image && blog.content) {
-      await editExistingBlog(blog.id, blog);
-      handleForm();
       if (blog.id) {
-        fetchSingleBlog(blog.id)
+        await editExistingBlog(blog.id, blog);
       }
+      handleForm();
     } else {
       setError("Please fill out all fields");
     }
   }
 
-  // const [title, setTitle] = useState<string>("");
-  // const [excerpt, setExcerpt] = useState<string>("");
-  // const [content, setContent] = useState<string>("");
-  // const [imageUrl, setImageUrl] = useState<string>("");
-
-  // // Populate the form with the initial blog data
-  // useEffect(() => {
-  //   if (initialBlog) {
-  //     setTitle(initialBlog.title || "");
-  //     setExcerpt(initialBlog.excerpt || "");
-  //     setContent(initialBlog.content || "");
-  //     setImageUrl(initialBlog.image || "");
-  //   }
-  // }, [initialBlog]);
-
-  // // Handle form submission
-  // async function handleEditBlog(e: React.FormEvent) {
-  //   e.preventDefault();
-
-  //   // Validate required fields
-  //   if (!title || !excerpt || !imageUrl || !content) {
-  //     setError("Please fill out all required fields.");
-  //     return;
-  //   }
-
-  //   const updatedBlog = {
-  //     title,
-  //     excerpt,
-  //     date: new Date().toISOString(), // Auto-generate the date
-  //     content,
-  //     imageUrl: imageUrl,
-  //   };
-
-  //   try {
-  //     if (initialBlog?.id) {
-  //       await editExistingBlog(initialBlog.id, updatedBlog); // Use the editExistingBlog function to update the blog
-  //       setError(""); // Clear any previous errors
-  //       handleForm(); // Close the modal
-  //     } else {
-  //       setError("Invalid blog ID. Unable to update the blog.");
-  //     }
-  //   } catch (err) {
-  //     console.error("Error editing blog:", err);
-  //     setError("An error occurred while editing the blog. Please try again.");
-  //   }
-  // }
-
   return (
     <Dialog open={true} onClose={handleForm} className="relative z-50">
-      
       <DialogBackdrop className="fixed inset-0 bg-gray-500/75 transition-opacity" />
 
-      
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-[80%]">
-            
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -115,13 +67,10 @@ export default function EditBlog({
               </div>
             </div>
 
-            
             {error && <p className="py-2 text-center text-red-500">{error}</p>}
 
-            
             <form className="bg-white px-4 sm:px-6" onSubmit={handleEditBlog}>
               <div className="mt-5 w-full">
-                {/* Blog Title */}
                 <div className="sm:col-span-4">
                   <label
                     htmlFor="blog-title"
@@ -135,14 +84,15 @@ export default function EditBlog({
                       name="blog-title"
                       type="text"
                       value={blog.title}
-                      onChange={(e) => setBlog({...blog, title:e.target.value})}
+                      onChange={(e) =>
+                        setBlog({ ...blog, title: e.target.value })
+                      }
                       placeholder="Blog title"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
                     />
                   </div>
                 </div>
 
-                
                 <div className="sm:col-span-4 mt-4">
                   <label
                     htmlFor="blog-excerpt"
@@ -155,14 +105,37 @@ export default function EditBlog({
                       id="blog-excerpt"
                       name="blog-excerpt"
                       value={blog.excerpt}
-                      onChange={(e) => setBlog({...blog, excerpt:e.target.value})}
+                      onChange={(e) =>
+                        setBlog({ ...blog, excerpt: e.target.value })
+                      }
                       placeholder="Short description of the blog"
                       className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
                     />
                   </div>
                 </div>
 
-                
+                <div className="sm:col-span-4 mt-4">
+                  <label
+                    htmlFor="blog-author"
+                    className="block text-sm font-medium text-gray-900"
+                  >
+                    Author <span className="text-red-500">*</span>
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="blog-author"
+                      name="blog-author"
+                      type="text"
+                      value={blog.author}
+                      onChange={(e) =>
+                        setBlog({ ...blog, author: e.target.value })
+                      }
+                      placeholder="Author name"
+                      className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                    />
+                  </div>
+                </div>
+
                 <div className="sm:col-span-4 mt-4">
                   <label
                     htmlFor="blog-image-url"
@@ -185,7 +158,6 @@ export default function EditBlog({
                   </div>
                 </div>
 
-                
                 <div className="sm:col-span-4 mt-4">
                   <label
                     htmlFor="blog-content"
@@ -194,15 +166,14 @@ export default function EditBlog({
                     Content <span className="text-red-500">*</span>
                   </label>
                   <RichTextEditor
-                    onChange={(content) =>
-                      setBlog({ ...blog, content }) // Update the blog content
+                    onChange={
+                      (content) => setBlog({ ...blog, content }) // Update the blog content
                     }
                     initialContent={blog.content} // Pass initial content to the editor
                   />
                 </div>
               </div>
 
-              
               <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
                   type="submit"

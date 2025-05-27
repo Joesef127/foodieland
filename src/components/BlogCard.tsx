@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { BlogCardProps } from "../utils/Types";
 import { Dropdown } from "../utils/Utils";
+import { formatDate } from "../utils/utilFunctions";
 
 export default function BlogCard({
   id,
@@ -39,7 +40,7 @@ export default function BlogCard({
           </p>
         </div>
         <p className="text-sm text-gray-500 text-center sm:text-start w-full">
-          By {author} • {date}
+          By {author} • {date && formatDate(date)}
         </p>
       </div>
 

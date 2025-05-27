@@ -6,49 +6,16 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import RichTextEditor from "./RichTextEditor";
-import useBlog from "../utils/useBlog"; // Import the useBlog hook
 import { BlogCardProps } from "../utils/Types";
 
-export default function AddBlog({ handleForm }: { handleForm: () => void }) {
-  const { addNewBlog } = useBlog();
+export default function AddBlog({
+  handleForm,
+  addNewBlog,
+}: {
+  handleForm: () => void;
+  addNewBlog: (newBlog: BlogCardProps) => Promise<BlogCardProps | null>;
+}) {
   const [error, setError] = useState<string>("");
-
-  // const [title, setTitle] = useState<string>("");
-  // const [excerpt, setExcerpt] = useState<string>("");
-  // const [content, setContent] = useState<string>("");
-  // const [imageUrl, setImageUrl] = useState<string>("");
-
-  // Handle form submission
-  // async function handleAddBlog(e: React.FormEvent) {
-  //   e.preventDefault();
-
-  //   // Validate required fields
-  //   if (!title || !excerpt || !content) {
-  //     setError("Please fill out all required fields.");
-  //     return;
-  //   }
-
-  //   const newBlog = {
-  //     title,
-  //     excerpt,
-  //     date: new Date().toISOString(), // Auto-generate the date
-  //     content,
-  //     imageUrl: imageUrl || undefined, // Optional field
-  //   };
-
-  //   try {
-  //     await addNewBlog(newBlog); // Use the addNewBlog function to save the blog
-  //     setTitle("");
-  //     setExcerpt("");
-  //     setContent("");
-  //     setImageUrl("");
-  //     setError(""); // Clear any previous errors
-  //     handleForm(); // Close the modal
-  //   } catch (err) {
-  //     console.error("Error adding blog:", err);
-  //     setError("An error occurred while adding the blog. Please try again.");
-  //   }
-  // }
 
   const [blog, setBlog] = useState<BlogCardProps>({
     title: "",
@@ -77,14 +44,11 @@ export default function AddBlog({ handleForm }: { handleForm: () => void }) {
 
   return (
     <Dialog open={true} onClose={handleForm} className="relative z-50">
-      {/* Dark overlay background */}
       <DialogBackdrop className="fixed inset-0 bg-gray-500/75 transition-opacity" />
 
-      {/* Modal container */}
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-[80%]">
-            {/* Modal header */}
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -101,13 +65,10 @@ export default function AddBlog({ handleForm }: { handleForm: () => void }) {
               </div>
             </div>
 
-            {/* Error message */}
             {error && <p className="py-2 text-center text-red-500">{error}</p>}
 
-            {/* Modal form */}
             <form className="bg-white px-4 sm:px-6" onSubmit={handleAddBlog}>
               <div className="mt-5 w-full">
-                {/* Blog Title */}
                 <div className="sm:col-span-4">
                   <label
                     htmlFor="blog-title"
@@ -130,7 +91,6 @@ export default function AddBlog({ handleForm }: { handleForm: () => void }) {
                   </div>
                 </div>
 
-                {/* Blog Excerpt */}
                 <div className="sm:col-span-4 mt-4">
                   <label
                     htmlFor="blog-excerpt"
@@ -152,7 +112,6 @@ export default function AddBlog({ handleForm }: { handleForm: () => void }) {
                   </div>
                 </div>
 
-                {/* Blog Image URL */}
                 <div className="sm:col-span-4 mt-4">
                   <label
                     htmlFor="blog-image-url"
@@ -175,7 +134,6 @@ export default function AddBlog({ handleForm }: { handleForm: () => void }) {
                   </div>
                 </div>
 
-                {/* Blog Content (Rich Text Editor) */}
                 <div className="sm:col-span-4 mt-4">
                   <label
                     htmlFor="blog-content"
@@ -184,14 +142,11 @@ export default function AddBlog({ handleForm }: { handleForm: () => void }) {
                     Content <span className="text-red-500">*</span>
                   </label>
                   <RichTextEditor
-                    onChange={
-                      (content) => setBlog({ ...blog, content }) 
-                    }
+                    onChange={(content) => setBlog({ ...blog, content })}
                   />
                 </div>
               </div>
 
-              {/* Modal actions */}
               <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
                   type="submit"
