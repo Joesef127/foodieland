@@ -5,7 +5,7 @@ import happy_chef from "../assets/images/happy_chef.png";
 export default function About() {
   return (
     <div className="pb-20 overflow-y-scroll relative inter">
-      {/* Hero Section */}
+      
       <section className="relative bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-20">
         <div className="w-[95%] sm:w-[90%] mx-auto flex flex-col items-center gap-6">
           <Heading text="About Us" customClass="text-center text-white" />
@@ -16,7 +16,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Who We Are Section */}
+      
       <section className="py-20 bg-gray-50">
         <div className="w-[95%] sm:w-[90%] mx-auto flex flex-col gap-10">
           <Heading text="Who We Are" customClass="text-center text-gray-800" />
@@ -31,7 +31,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Our Mission Section */}
+      
       <section className="py-20 bg-white">
         <div className="w-[95%] sm:w-[90%] mx-auto flex flex-col gap-10">
           <Heading text="Our Mission" customClass="text-center text-gray-800" />
@@ -53,7 +53,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Our Vision Section */}
+      
       <section className="py-20 bg-gray-50">
         <div className="w-[95%] sm:w-[90%] mx-auto flex flex-col gap-10">
           <Heading text="Our Vision" customClass="text-center text-gray-800" />
@@ -67,7 +67,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Our Team Section */}
+      
       <section className="py-20 bg-white">
         <div className="w-[95%] sm:w-[90%] mx-auto flex flex-col gap-10">
           <Heading text="Meet Our Team" customClass="text-center text-gray-800" />
@@ -87,7 +87,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
+      
       <section className="py-20 bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
         <div className="w-[95%] sm:w-[90%] mx-auto flex flex-col items-center gap-10">
           <Heading text="Join Our Community" customClass="text-center text-white" />

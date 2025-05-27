@@ -20,7 +20,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Add this to include type declarations */
+    "typeRoots": ["./node_modules/@types", "./node_modules"],
+
+    /* Optional: Explicitly include swiper types */
+    "types": ["swiper"]
   },
   "include": ["src"]
 }

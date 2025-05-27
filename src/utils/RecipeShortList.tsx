@@ -30,7 +30,6 @@ export default function RecipeShortList({
     setSelectedRecipe(null);
   }
 
-  // const randomItemsList = ShuffleArray(recipeData).slice(0, 4)
 
   return (
     <section className="flex justify-center items-center mt-10">

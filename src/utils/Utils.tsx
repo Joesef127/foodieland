@@ -10,6 +10,7 @@ import {
   RecipeType,
   StickyObjectProps,
   SubHeadingProps,
+  UserType,
 } from "./Types";
 import { formatDate } from "./utilFunctions";
 
@@ -52,7 +53,10 @@ export const UserBox = ({
   nameStyle,
   imageStyle,
   postDate,
+
+  user,
 }: {
+  user?: UserType;
   userPic?: string;
   userName?: string;
   customStyle?: string;
@@ -66,13 +70,13 @@ export const UserBox = ({
       <figure
         className={`overflow-hidden rounded-full max-w-10 max-h-10 lg:max-w-14 lg:max-h-14 border border-black ${imageStyle}`}
       >
-        <img src={userPic} alt="User pic" />
+        <img src={user?.profilePicture || userPic} alt="User pic" />
       </figure>
       <div>
         <h3
           className={`mb-1 sm:mb-2 font-bold text-xs sm:text-sm lg:text-base ${nameStyle}`}
         >
-          {userName || "John Smith"}
+          {user?.name || userName}
         </h3>
         <p className={`text-xs sm:text-sm font-medium ${dateStyle}`}>
           {postDate

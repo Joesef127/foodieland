@@ -44,7 +44,7 @@ export default function BlogCard({
         </p>
       </div>
 
-      <div className="absolute bottom-[45%] right-2">
+      <div className="absolute bottom-[1%] sm:bottom-[45%] right-2">
         <Dropdown
           handleDeleteItem={handleDeleteItem || (() => {})}
           handleOpenEditForm={handleOpenEditForm || (() => {})}

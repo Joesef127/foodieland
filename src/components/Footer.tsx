@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="flex flex-col justify-center items-center w-full bg-white py-8">
       <div className="w-[90%] max-w-[1440px] flex flex-col justify-between items-center">
-        {/* Top Section */}
+        
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-6">
 
           <div className="flex flex-col items-start gap-4 md:text-left">
@@ -54,13 +54,13 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom Section */}
+        
         <div className="relative w-full flex flex-col sm:flex-row justify-center items-center gap-4 border-t border-gray-200 pt-4 mt-4">
         
           <div className="text-center md:text-left text-sm md:text-base text-gray-500">
             <p>
-              &copy; {currentYear} Flowbase. Powered by{" "}
-              <span className="text-[#FF7967]">Webflow</span>.
+              &copy; {currentYear} AdeDev Solutions. Developed by{" "}
+              <span className="text-[#FF7967]">AdeDevSolutions</span>.
             </p>
           </div>
 

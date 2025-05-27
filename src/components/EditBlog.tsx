@@ -167,9 +167,9 @@ export default function EditBlog({
                   </label>
                   <RichTextEditor
                     onChange={
-                      (content) => setBlog({ ...blog, content }) // Update the blog content
+                      (content) => setBlog({ ...blog, content }) 
                     }
-                    initialContent={blog.content} // Pass initial content to the editor
+                    initialContent={blog.content} 
                   />
                 </div>
               </div>

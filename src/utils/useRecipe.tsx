@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   fetchRecipe,
-  // fetchRecipeById,
   AddRecipe,
   handleEditRecipe,
   handleDeleteRecipe,
@@ -42,12 +41,9 @@ const useRecipe = () => {
     }
   };
 
-  // const fetchSingleRecipe = async (id: number): Promise<RecipeType | null> => { 
-  //   return await fetchRecipeById(id);
-  // };
 
   const addRecipe = async (recipe: RecipeType): Promise<RecipeType | null> => {
-    // setIsLoading(true);
+    
     setError(null);
     try {
       const response = await AddRecipe(recipe);
@@ -72,7 +68,7 @@ const useRecipe = () => {
       console.error("Error adding recipe:", error);
       return null;
     } finally {
-      // setIsLoading(false);
+      console.log("Recipe added successfully");
     }
   };
 
@@ -80,7 +76,7 @@ const useRecipe = () => {
     id: number | undefined,
     recipe: RecipeType
   ): Promise<RecipeType | void> => {
-    // setIsLoading(true);
+   
     setError(null);
     try {
       const response = await handleEditRecipe(id, recipe);
@@ -106,12 +102,12 @@ const useRecipe = () => {
       }
       console.error("Error editing recipe:", error);
     } finally {
-      // setIsLoading(false);
+      console.log("Recipe edited successfully");
     }
   };
 
   const deleteRecipe = async (id: number | undefined): Promise<boolean> => {
-    // setIsLoading(true);
+    
     setError(null);
     try {
       const response = await handleDeleteRecipe(id);
@@ -137,14 +133,14 @@ const useRecipe = () => {
       console.error("Error deleting recipe:", error);
       return false;
     } finally {
-      // setIsLoading(false);
+      console.log("Recipe deleted successfully");
     }
   };
 
   const toggleFavorite = async (
     id: number | undefined
   ): Promise<RecipeType | null> => {
-    // setIsLoading(true);
+    
     setError(null);
     try {
       const response = await handleToggleFavorite(id);
@@ -171,7 +167,7 @@ const useRecipe = () => {
       console.error("Error toggling favorite status:", error);
       return null;
     } finally {
-      // setIsLoading(false);
+      console.log("Recipe favorite status toggled successfully");
     }
   };
 

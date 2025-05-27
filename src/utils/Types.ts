@@ -61,7 +61,6 @@ export interface HeroSlideType {
   user: {
     name: string;
     profilePicture: string;
-    // date: Date;
   };
   backgroundImage: string;
   button: {

@@ -1,6 +1,3 @@
-// import Swiper from "swiper";
-// import { SwiperSlide } from "swiper/react";
-// import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import { heroSlides } from "../utils/HeroSlidesData";

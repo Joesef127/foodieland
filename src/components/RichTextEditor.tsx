@@ -9,13 +9,12 @@ export default function RichTextEditor({
   initialContent,
 }: {
   onChange: (content: string) => void;
-  initialContent?: string; // Optional initial content
+  initialContent?: string; 
 }) {
   const [editorState, setEditorState] = useState<EditorState>(
     EditorState.createEmpty()
   );
 
-  // Initialize the editor state with the initial content if provided
   useEffect(() => {
     if (initialContent) {
       try {
@@ -30,7 +29,6 @@ export default function RichTextEditor({
   const onEditorStateChange = (editorState: EditorState) => {
     setEditorState(editorState);
 
-    // Convert editor state to raw JSON and pass it to the parent
     const rawContent = JSON.stringify(
       convertToRaw(editorState.getCurrentContent())
     );

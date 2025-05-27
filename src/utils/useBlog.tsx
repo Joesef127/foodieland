@@ -5,15 +5,15 @@ import {
   addBlog,
   editBlog,
   deleteBlog,
-} from "./BlogCrud"; // Import your API functions
-import { BlogCardProps } from "./Types"; // Import the Blog type
+} from "./BlogCrud"; 
+import { BlogCardProps } from "./Types"; 
 
 const useBlog = () => {
   const [blogData, setBlogData] = useState<BlogCardProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch all blogs
+  
   const fetchAllBlogs = async () => {
     setIsLoading(true);
     setError(null);
@@ -42,7 +42,7 @@ const useBlog = () => {
     }
   };
 
-  // Fetch a single blog by ID
+  
   const fetchSingleBlog = async (id: number): Promise<BlogCardProps | null> => {
     setIsLoading(true);
     setError(null);
@@ -72,7 +72,7 @@ const useBlog = () => {
     }
   };
 
-  // Add a new blog
+  
   const addNewBlog = async (blog: BlogCardProps): Promise<BlogCardProps | null> => {
     setError(null);
     try {
@@ -100,7 +100,7 @@ const useBlog = () => {
     }
   };
 
-  // Edit an existing blog
+  
   const editExistingBlog = async (
     id: number | undefined,
     blog: BlogCardProps
@@ -132,7 +132,7 @@ const useBlog = () => {
     }
   };
 
-  // Delete a blog
+  
   const deleteExistingBlog = async (id: number | undefined): Promise<boolean> => {
     setError(null);
     try {

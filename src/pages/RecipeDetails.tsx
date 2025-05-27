@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-// import useRecipe from "../utils/useRecipe";
 
 import { RecipeType } from "../utils/Types";
 import {
@@ -8,7 +7,6 @@ import {
   UserBox,
   Badge,
   LoadingSpinner,
-  // ShuffleArray,
   OutputIcon,
   BaseUrl,
 } from "../utils/Utils";
@@ -30,7 +28,6 @@ export default function RecipeDetails() {
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  // const { recipeData } = useRecipe();
 
   const fetchRecipeDetails = useCallback(async () => {
     setIsLoading(true);

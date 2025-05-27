@@ -67,18 +67,18 @@ export default function Blog() {
         <div className="pb-20 overflow-y-scroll relative inter">
           <section className="relative flex justify-center items-center mt-10 gap-20">
             <div className="w-[95%] sm:w-[90%] flex flex-col gap-5">
-              <div className="flex flex-col justify-between items-center mb-10">
+              <div className="flex flex-col justify-between items-center mb-2 sm:mb-10">
                 <Heading text={blog.title} customClass="text-center mb-6" />
                 <div className="grid grid-cols-2 col-span-2 gap-4 items-center">
                   <UserBox
                     userPic={user_dp}
-                    customStyle="pr-6 flex-row justify-center items-center border-r sm:border-b sm:border-b-0 border-black/20"
+                    customStyle=" w-fit pr-4 sm:pr-6 flex-row sm:justify-center items-center border-r sm:border-b sm:border-b-0 border-black/20"
                     dateStyle="hidden"
                     userName={blog.author}
                   />
                   <UserBox
                     userPic={user_dp}
-                    customStyle="flex-row justify-start items-center sm:border-b sm:border-b-0 border-black/20 text-black/60 mb-2"
+                    customStyle="flex-row justify-start items-center sm:border-b sm:border-b-0 border-black/20 text-black/60 mb-2 col-span-1"
                     nameStyle="hidden"
                     imageStyle="hidden"
                     postDate={blog.date}
@@ -95,9 +95,8 @@ export default function Blog() {
                   className="w-full h-full object-cover object-center"
                 />
               </figure>
-              <div className="grid grid-cols-4 gap-6 mt-10">
-                <div className="flex flex-col gap-6 col-span-3 px-5">
-                  {/* Render Blog Content Dynamically */}
+              <div className="grid sm:grid-cols-4 gap-6 mt-10">
+                <div className="flex flex-col gap-6 sm:col-span-3 px-5">
                   <div className="py-4">
                     <h2 className="font-bold text-xl">Blog Content</h2>
                     <div
@@ -112,7 +111,7 @@ export default function Blog() {
                   <h3 className="text-lg font-bold text-center">
                     SHARE THIS ON:
                   </h3>
-                  <SocialMediaBox boxStyle="flex-col" />
+                  <SocialMediaBox boxStyle="sm:flex-col" />
                 </div>
               </div>
             </div>
