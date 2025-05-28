@@ -144,7 +144,7 @@ function App() {
                     customClass="p-2.5"
                     bgColor="#E7FAFE"
                     animation={
-                      recipe.id % 2 === 0 ? "fade-up" : "fade-down"
+                      recipe.id && recipe.id % 2 === 0 ? "fade-up" : "fade-down"
                     }
                   />
                 ))}
@@ -328,7 +328,7 @@ function App() {
                     handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     customClass="p-2.5"
                     animation={
-                      recipe.id % 2 === 0 ? "fade-up" : "fade-down"
+                      recipe.id && recipe.id % 2 === 0 ? "fade-up" : "fade-down"
                     }
                     data-aos-delay={100}
                   />
@@ -337,7 +337,7 @@ function App() {
         </div>
       </section>
 
-      <section>
+      <section data-aos="fade-left">
         <Newsletter />
       </section>
     </div>

@@ -13,7 +13,6 @@ import {
   UserType,
 } from "./Types";
 import { formatDate } from "./utilFunctions";
-// import useAOS from "../hooks/useAOS";
 
 export const BaseUrl = "http://localhost:8000/";
 

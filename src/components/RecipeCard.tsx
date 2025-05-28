@@ -5,7 +5,7 @@ import heart_fill from "../assets/icons/heart_fill.svg";
 import heart_blank from "../assets/icons/heart_blank.svg";
 import { Link } from "react-router-dom";
 import { RecipeCardType } from "../utils/Types";
-import React, { useEffect } from "react";
+import React from "react";
 
 const Recipe = React.memo(
   ({
