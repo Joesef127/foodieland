@@ -23,17 +23,17 @@ export default function Header() {
           aria-label="Toggle Menu"
         >
           <span
-            className={`block w-full h-0.5 bg-gray-800 transition-transform ${
+            className={`block w-full h-0.5 bg-black transition-transform ${
               isMenuOpen ? "rotate-45 translate-y-1.5" : ""
             }`}
           ></span>
           <span
-            className={`block w-full h-0.5 bg-gray-800 transition-opacity ${
+            className={`block w-full h-0.5 bg-black transition-opacity ${
               isMenuOpen ? "opacity-0" : ""
             }`}
           ></span>
           <span
-            className={`block w-full h-0.5 bg-gray-800 transition-transform ${
+            className={`block w-full h-0.5 bg-black transition-transform ${
               isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
             }`}
           ></span>
