@@ -28,6 +28,7 @@ const useRecipe = () => {
         }
       }
       const data: RecipeType[] = await response.json();
+      console.log("Fetched recipes:", data);
       setRecipeData(data);
     } catch (error: unknown) {
       if (error instanceof Error) {

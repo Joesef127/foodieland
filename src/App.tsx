@@ -64,7 +64,6 @@ function App() {
   useAOS({
     duration: 500,
     easing: "ease-in-out",
-    once: false,
   });
 
   function handleOpenEditForm(recipe: RecipeType) {
