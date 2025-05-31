@@ -14,7 +14,7 @@ import {
 } from "./Types";
 import { formatDate } from "./utilFunctions";
 
-export const BaseUrl = "http://localhost:8000/";
+export const BaseUrl = "https://foodielandbackend.vercel.app/";
 
 export const Badge = ({
   icon,
