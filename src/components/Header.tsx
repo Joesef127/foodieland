@@ -72,13 +72,13 @@ export default function Header() {
           >
             Contact
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to={"/about"}
             className="text-gray-800 text-xs sm:text-sm md:text-base hover:bg-indigo-600 focus:bg-indigo-600 hover:text-white focus:text-white transition-colors py-1 md:py-2 px-2 md:px-3 rounded-lg"
             onClick={() => setIsMenuOpen(false)}
           >
             About
-          </NavLink>
+          </NavLink> */}
         </nav>
 
         <div className="hidden sm:block">
