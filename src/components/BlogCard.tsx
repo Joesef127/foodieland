@@ -13,6 +13,7 @@ export default function BlogCard({
   excerpt,
   handleDeleteItem,
   handleOpenEditForm,
+  animation,
 }: BlogCardProps) {
   const { role } = useGlobalContext();
 
@@ -20,6 +21,7 @@ export default function BlogCard({
     <div
       key={id}
       className="relative flex flex-col sm:flex-row gap-4 items-center rounded-2xl p-2 sm:p-4 bg-white shadow-md hover:shadow-lg transition-shadow"
+      data-aos={animation}
     >
       <Link to={`/blog/${id}`}>
         <figure className="relative h-fit size-64 sm:max-w-36 md:min-w-40 md:max-w-40 lg:min-w-32 lg:max-w-44 rounded-xl lg:rounded-2xl overflow-hidden">

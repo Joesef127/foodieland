@@ -8,10 +8,10 @@ export default function SocialMediaBox({ boxStyle }: { boxStyle?: string }) {
             <a href="#">
                 <img src={facebook} alt="fcb" className="size-4 md:size-5" />
             </a>
-            <a href="#">
+            <a href="https://x.com/yorubamerlin_" target="_blank">
                 <img src={twitter} alt="twt" className="size-4 md:size-5" />
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/yoruba_merlin" target="_blank">
                 <img src={instagram_black} alt="ig" className="size-4 md:size-5" />
             </a>
         </div>

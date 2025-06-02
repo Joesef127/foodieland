@@ -5,6 +5,7 @@ import Newsletter from "../components/Newsletter";
 import SelectDropdown from "../utils/SelectDropdown";
 import { OptionType } from "../utils/Types";
 import RecipeShortList from "../utils/RecipeShortList";
+import useAOS from "../hooks/useAOS";
 
 const enquiryTypeOptions = [
   { id: 1, name: "General Enquiry" },
@@ -17,16 +18,24 @@ const enquiryTypeOptions = [
 
 export default function Contact() {
   const [selectedEnquiryType, setSelectedEnquiryType] = useState<OptionType>();
+  useAOS();
 
   return (
     <div className="pb-20 overflow-y-scroll relative inter">
       <section className="relative flex justify-center items-center mt-10 gap-20">
         <div className="w-[95%] sm:w-[90%] flex flex-col gap-5">
           <div className="flex flex-col justify-between items-center mb-10">
-            <Heading text="Contact Us" customClass="text-center" />
+            <Heading
+              text="Contact Us"
+              customClass="text-center"
+              animation="fade-right"
+              data-aos-delay="100"
+            />
             <SubHeading
               text="We would love to hear from you!"
               customClass="text-center text-gray-500"
+              animation="fade-left"
+              data-aos-delay="100"
             />
           </div>
 
@@ -37,6 +46,8 @@ export default function Contact() {
                 style={{
                   background: "linear-gradient(to bottom, white, #EDFAFD)",
                 }}
+                data-aos="fade-right"
+                data-aos-delay="200"
               >
                 <img src={smiling_chef} alt="Smiling chef" />
               </div>
@@ -54,6 +65,8 @@ export default function Contact() {
                       inputStyle="text-sm"
                       labelStyle="text-xs"
                       required={true}
+                      animation="fade-right"
+                      data-aos-delay="100"
                     />
 
                     <FormInput
@@ -66,6 +79,8 @@ export default function Contact() {
                       inputStyle="text-sm"
                       labelStyle="text-xs"
                       required={true}
+                      animation="fade-left"
+                      data-aos-delay="100"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-2.5 lg:gap-5 w-full">
@@ -79,6 +94,8 @@ export default function Contact() {
                       inputStyle="text-sm"
                       labelStyle="text-xs"
                       required={true}
+                      animation="fade-right"
+                      data-aos-delay="200"
                     />
 
                     <SelectDropdown
@@ -89,6 +106,8 @@ export default function Contact() {
                       buttonStyle="border border-gray-300 bg-transparent shadow:sm focus:border-indigo-500 focus:ring-indigo-500"
                       optionStyle="w-full"
                       labelStyle="text-xs font-normal text-gray-700 uppercase"
+                      animation="fade-left"
+                      data-aos-delay="200"
                     />
                   </div>
                   <FormInput
@@ -102,6 +121,8 @@ export default function Contact() {
                     rows={5}
                     customClass="text-gray-700"
                     required={false}
+                    animation="fade-up"
+                    data-aos-delay="300"
                   />
                   <Button
                     text="Submit"

@@ -10,7 +10,8 @@ import {
   RecipeType,
   StickyObjectProps,
   SubHeadingProps,
-  UserType,
+  UserBoxProps,
+  // UserType,
 } from "./Types";
 import { formatDate } from "./utilFunctions";
 
@@ -54,20 +55,11 @@ export const UserBox = ({
   nameStyle,
   imageStyle,
   postDate,
-
+  animation,
   user,
-}: {
-  user?: UserType;
-  userPic?: string;
-  userName?: string;
-  customStyle?: string;
-  dateStyle?: string;
-  nameStyle?: string;
-  imageStyle?: string;
-  postDate?: string;
-}) => {
+}: UserBoxProps) => {
   return (
-    <div className={`flex items-center gap-2 lg:gap-4 ${customStyle}`}>
+    <div className={`flex items-center gap-2 lg:gap-4 ${customStyle}`} data-aos={animation}>
       <figure
         className={`overflow-hidden rounded-full max-w-10 max-h-10 lg:max-w-14 lg:max-h-14 border border-black ${imageStyle}`}
       >
@@ -240,9 +232,10 @@ export const FormInput = ({
   isTextArea,
   rows,
   cols,
+  animation,
 }: FormInputProps) => {
   return (
-    <div className={`grid grid-cols-1 gap-2 ${customClass}`}>
+    <div className={`grid grid-cols-1 gap-2 ${customClass}`} data-aos={animation}>
       <label htmlFor={id} className={labelStyle}>
         {label}
       </label>

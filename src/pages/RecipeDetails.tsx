@@ -22,12 +22,17 @@ import Timer from "../assets/icons/Timer.svg";
 import ForkKnife from "../assets/icons/ForkKnife.svg";
 import GreenCard from "../components/GreenCard";
 import RecipeSideList from "../utils/RecipeSideList";
+import useAOS from "../hooks/useAOS";
 
 export default function RecipeDetails() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  useAOS({
+    duration: 500,
+    easing: "ease-in-out",
+  });
 
   const fetchRecipeDetails = useCallback(async () => {
     setIsLoading(true);
@@ -73,22 +78,23 @@ export default function RecipeDetails() {
             <div className="w-[95%] sm:w-[90%] flex flex-col justify-center items-center gap-5">
               <div className="w-full flex flex-col sm:grid sm:grid-cols-4 justify-between gap-4 md:gap-6">
                 <div className="relative flex flex-col w-full col-span-3 gap-6">
-                  <Heading text={recipe.name} customClass="mb-4 text-center sm:text-start" />
+                  <Heading text={recipe.name} customClass="mb-4 text-center sm:text-start" animation="fade-right" data-aos-delay="100" />
                   <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-2 md:gap-4 w-full">
                     <div className="grid grid-cols-2 sm:grid-cols-1 sm:gap-4 w-full">
                       <UserBox
                         userPic={user_dp}
                         customStyle="lg:pr-6 flex-row sm:justify-start justify-center items-center sm:border-b sm:border-b-0 border-black/20"
+                        animation="fade-right"
                       />
 
-                      <div className="flex sm:hidden justify-center items-center gap-2 sm:gap-4 md:gap-5 lg:gap-6 sm:border-b border-black/20 py-1">
+                      <div className="flex sm:hidden justify-center items-center gap-2 sm:gap-4 md:gap-5 lg:gap-6 sm:border-b border-black/20 py-1" data-aos="fade-left" data-aos-delay="200">
                         <OutputIcon icon={printer} title="PRINT" />
                         <OutputIcon icon={share} title="SHARE" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 col-span-2 items-center">
-                      <div className="flex justify-center sm:justify-start items-center py-1 sm:border-b-0 sm:border-l rounded-none border-black/20">
+                      <div className="flex justify-center sm:justify-start items-center py-1 sm:border-b-0 sm:border-l rounded-none border-black/20" data-aos="fade-left" data-aos-delay="200">
                         <Badge
                           icon={Timer}
                           text="COOK TIME"
@@ -97,7 +103,7 @@ export default function RecipeDetails() {
                           customClass="gap-4 text-xs md:text-sm px-0"
                         />
                       </div>
-                      <div className="flex justify-center sm:justify-start items-center h-full py-1 sm:border-l rounded-none border-black/20">
+                      <div className="flex justify-center sm:justify-start items-center h-full py-1 sm:border-l rounded-none border-black/20" data-aos="fade-left" data-aos-delay="300">
                         <Badge
                           icon={ForkKnife}
                           text={recipe.category}
@@ -109,21 +115,21 @@ export default function RecipeDetails() {
                   </div>
                 </div>
 
-                <div className="hidden sm:flex sm:justify-end items-center gap-2 sm:gap-4 md:gap-5 lg:gap-6">
+                <div className="hidden sm:flex sm:justify-end items-center gap-2 sm:gap-4 md:gap-5 lg:gap-6" data-aos="fade-left" data-aos-delay="300">
                   <OutputIcon icon={printer} title="PRINT" />
                   <OutputIcon icon={share} title="SHARE" />
                 </div>
               </div>
 
               <div className="w-full grid md:grid-cols-2 justify-center lg:justify-between gap-6 md:gap-4 lg:gap-6 mt-12">
-                <div className="md:col-span-1 w-full overflow-hidden rounded-3xl">
+                <div className="md:col-span-1 w-full overflow-hidden rounded-3xl" data-aos="fade-up" data-aos-delay="200">
                   <img
                     src={recipe.image}
                     alt={recipe.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="p-6 md:p-4 lg:p-6 bg-[#E7FAFE] rounded-3xl flex flex-col justify-between gap-6">
+                <div className="p-6 md:p-4 lg:p-6 bg-[#E7FAFE] rounded-3xl flex flex-col justify-between gap-6" data-aos="fade-left" data-aos-delay="200">
                   <div className="flex flex-col gap-3  lg:gap-6 ">
                     <h2 className="font-bold text-base md:text-lg lg:text-2xl">
                       Nutrition Information
@@ -148,7 +154,7 @@ export default function RecipeDetails() {
                   </p>
                 </div>
               </div>
-              <p className="mt-2 sm:mt-4 lg:mt-6 text-black/60 text-xs sm:text-sm md:text-base">
+              <p className="mt-2 sm:mt-4 lg:mt-6 text-black/60 text-xs sm:text-sm md:text-base" data-aos="fade-right" data-aos-delay="100">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex et
                 ab veniam perferendis recusandae eveniet modi debitis non
                 aspernatur. Aliquid tenetur ducimus voluptatem iure maxime,
@@ -167,10 +173,10 @@ export default function RecipeDetails() {
               </div>
               <div className="col-span-1 grid md:grid-cols-2 lg:grid-cols-1 gap-16 w-full h-fit">
                 <div className="w-full">
-                  <Heading text="Other Recipes" />
+                  <Heading text="Other Recipes" animation="fade-left" data-aos-delay="300" />
                   <RecipeSideList />
                 </div>
-                <GreenCard />
+                <GreenCard animation="fade-left" data-aos-delay="200" />
               </div>
             </div>
           </section>
@@ -179,7 +185,7 @@ export default function RecipeDetails() {
             <Newsletter />
           </div>
 
-          <div className="mt-10 sm:mt-20 md:mt-30 lg:mt-40">
+          <div className="mt-10 sm:mt-20 md:mt-30 lg:mt-40" data-aos="fade-right" data-aos-delay="200">
             <RecipeShortList headingText="You may like these recipe too" />
           </div>
         </div>

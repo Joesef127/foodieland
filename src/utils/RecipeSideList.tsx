@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import useRecipe from "../hooks/useRecipe";
 import { ShuffleArray } from "./Utils";
+import useAOS from "../hooks/useAOS";
 
 export default function RecipeSideList() {
   const { recipeData } = useRecipe();
+
+  useAOS({
+    duration: 500,
+    easing: "ease-in-out",
+  });
 
   const randomRecipes = ShuffleArray(recipeData).slice(0, 3);
 
@@ -15,6 +21,8 @@ export default function RecipeSideList() {
             to={`/recipes/${recipe.id}`}
             key={recipe.id}
             className="flex lg:grid lg:grid-cols-2 justify-start items-center gap-4"
+            data-aos="fade-up"
+            data-aos-delay="100"
           >
             <figure className="max-w-32 min-w-32 sm:max-w-36 md:min-w-40 md:max-w-40 lg:min-w-32 lg:max-w-44 rounded-xl lg:rounded-2xl overflow-hidden">
               <img

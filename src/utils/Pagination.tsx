@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { PaginationProps } from "./Types";
+import useAOS from "../hooks/useAOS";
 
 
 export default function Pagination({
@@ -8,6 +9,11 @@ export default function Pagination({
   onPageChange,
   customStyle
 }: PaginationProps) {
+  useAOS({
+    duration: 500,
+    easing: "ease-in-out",
+  });
+
   const handlePrevious = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -47,6 +53,7 @@ export default function Pagination({
           onClick={handlePrevious}
           disabled={currentPage === 1}
           className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+          data-aos="fade-right" data-aos-delay="100"
         >
           Previous
         </button>
@@ -54,13 +61,14 @@ export default function Pagination({
           onClick={handleNext}
           disabled={currentPage === totalPages}
           className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+          data-aos="fade-left" data-aos-delay="100"
         >
           Next
         </button>
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-gray-700">
+          <p className="text-sm text-gray-700" data-aos="fade-right" data-aos-delay="100">
             Page <span className="font-medium">{currentPage}</span> of{" "}
             <span className="font-medium">{totalPages}</span>
           </p>
@@ -69,6 +77,7 @@ export default function Pagination({
           <nav
             aria-label="Pagination"
             className="isolate inline-flex -space-x-px rounded-md shadow-xs"
+            data-aos="fade-left" data-aos-delay="100"
           >
             <button
               onClick={handlePrevious}

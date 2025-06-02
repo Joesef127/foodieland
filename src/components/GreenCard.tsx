@@ -1,13 +1,14 @@
 import green_star from "../assets/images/green_star.svg";
 import green_food from "../assets/images/green_food.svg";
 
-export default function GreenCard() {
+export default function GreenCard({ animation }: { animation?: string }) {
   return (
     <div
       className="relative flex justify-center items-center p-8 h-fit overflow-hidden"
       style={{
         background: "linear-gradient(to bottom, #336F53, #1E4B3D)",
       }}
+      data-aos={animation}
     >
       <img src={green_star} className="absolute z-[1] w-[120%]" />
       <div className="z-[2] flex flex-col justify-center items-center">

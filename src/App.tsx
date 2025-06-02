@@ -34,6 +34,11 @@ import HeroSection from "./components/HomeHeroSection";
 import useRecipe from "./hooks/useRecipe";
 import useAOS from "./hooks/useAOS";
 function App() {
+  useAOS({
+    duration: 500,
+    easing: "ease-in-out",
+  });
+
   const {
     recipeData,
     isLoading,
@@ -61,10 +66,6 @@ function App() {
     { image: post4, name: "Post 4" },
   ];
 
-  useAOS({
-    duration: 500,
-    easing: "ease-in-out",
-  });
 
   function handleOpenEditForm(recipe: RecipeType) {
     setSelectedRecipe(recipe);

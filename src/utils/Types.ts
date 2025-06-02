@@ -36,6 +36,18 @@ export interface UserType {
   profilePicture: string;
 }
 
+export interface UserBoxProps {
+  user?: UserType;
+  userPic?: string;
+  userName?: string;
+  customStyle?: string;
+  dateStyle?: string;
+  nameStyle?: string;
+  imageStyle?: string;
+  postDate?: string;
+  animation?: string;
+}
+
 export interface ButtonType {
   text: string;
   icon: string;
@@ -84,6 +96,7 @@ export interface SelectDropdownProps {
   labelStyle?: string;
   optionStyle?: string;
   buttonStyle?: string;
+  animation?: string;
 }
 
 export interface FormInputProps {
@@ -101,6 +114,7 @@ export interface FormInputProps {
   isTextArea?: boolean;
   rows?: number;
   cols?: number;
+  animation?: string;
 }
 
 export interface BadgeProps {
@@ -154,9 +168,9 @@ export interface StickyObjectProps {
 export interface ItemsListProps {
   title: string;
   items?: string[];
-};
+}
 
-export interface BlogCardProps  {
+export interface BlogCardProps {
   id?: number;
   title: string;
   image?: string;
@@ -164,13 +178,14 @@ export interface BlogCardProps  {
   date?: string;
   excerpt?: string;
   content?: string;
+  animation?: string;
   handleDeleteItem?: () => void;
-  handleOpenEditForm?: () => void
-};
+  handleOpenEditForm?: () => void;
+}
 
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
   customStyle?: string;
-};
+}

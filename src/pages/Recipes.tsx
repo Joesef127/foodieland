@@ -8,9 +8,14 @@ import useRecipe from "../hooks/useRecipe";
 import EditRecipeForm from "../components/EditRecipe";
 import AddRecipeForm from "../components/AddRecipe";
 import { useGlobalContext } from "../GlobalContext";
+import useAOS from "../hooks/useAOS";
 
 export default function Recipes() {
   const { role } = useGlobalContext();
+  useAOS({
+    duration: 500,
+    easing: "ease-in-out",
+  });
 
   const {
     recipeData,
@@ -98,14 +103,14 @@ export default function Recipes() {
       <section className="relative flex justify-center items-center mt-10 gap-20">
         <div className="w-[95%] sm:w-[90%] flex flex-col justify-center items-center gap-5">
           <div className="flex flex-col justify-between items-center">
-            <Heading text="Recipes" customClass="text-center mb-4" />
+            <Heading text="Recipes" customClass="text-center mb-4" animation="fade-left" />
             <SubHeading
               text="Here is a list of all the recipes we have to offer. Use the filters below to find your favorite recipes."
-              customClass="text-center text-gray-500 mb-8"
+              customClass="text-center text-gray-500 mb-8" animation="fade-right"
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full" data-aos="fade-up" data-aos-delay="100">
             <input
               type="text"
               placeholder="Search for a recipe..."
@@ -116,7 +121,7 @@ export default function Recipes() {
           </div>
 
           <div className="w-full flex flex-col sm:flex-row sm:justify-center sm:items-baseline gap-4 sm:gap-8">
-            <div className="flex flex-col">
+            <div className="flex flex-col" data-aos="fade-right" data-aos-delay="200">
               <SelectDropdown
                 label="Filter by Category"
                 options={categoryOptions}
@@ -129,7 +134,7 @@ export default function Recipes() {
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col" data-aos="fade-up" data-aos-delay="200">
               <SelectDropdown
                 label="Filter by Cooking Time"
                 options={timeOptions}
@@ -141,7 +146,7 @@ export default function Recipes() {
               />
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col" data-aos="fade-left" data-aos-delay="200">
               <h5 className={`block `}>Filter by favorites</h5>
               <button
                 className={`flex gap-2.5 justify-between items-center w-full cursor-default rounded bg-white text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 text-xs sm:text-sm py-2 px-1 lg:py-4 lg:px-3 mt-2`}
@@ -179,6 +184,7 @@ export default function Recipes() {
                     handleOpenEditForm={() => handleOpenEditForm(recipe)}
                     handleToggleFavorite={() => toggleFavorite(recipe.id)}
                     bgColor="#E7FAFE"
+                    animation={recipe.id && recipe.id % 2 === 0 ? "fade-up" : "fade-down"}
                   />
                 ))}
               </div>

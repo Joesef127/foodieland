@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Heading } from "./Utils";
 import RecipeCard from "../components/RecipeCard";
 import { RecipeType } from "./Types";
+import useAOS from "../hooks/useAOS";
 
 export default function RecipeShortList({
   headingText,
@@ -20,6 +21,11 @@ export default function RecipeShortList({
     error,
     toggleFavorite,
   } = useRecipe();
+
+  useAOS({
+    duration: 500,
+    easing: "ease-in-out",
+  });
 
   function handleOpenEditForm(recipe: RecipeType): void {
     setSelectedRecipe(recipe);
@@ -52,6 +58,9 @@ export default function RecipeShortList({
                   handleToggleFavorite={() => toggleFavorite(recipe.id)}
                   handleDeleteItem={() => deleteRecipe(recipe.id)}
                   handleOpenEditForm={() => handleOpenEditForm(recipe)}
+                  animation={
+                    recipe.id && recipe.id % 2 === 0 ? "fade-up" : "fade-down"
+                  }
                 />
               ))}
             </div>

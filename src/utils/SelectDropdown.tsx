@@ -18,9 +18,10 @@ export default function SelectDropdown({
   labelStyle,
   optionStyle,
   buttonStyle,
+  animation,
 }: SelectDropdownProps) {
   return (
-    <div className="relative">
+    <div className="relative" data-aos={animation}>
       <Listbox value={selected} onChange={onChange}>
         <Label
           className={`block ${labelStyle}`}

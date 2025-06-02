@@ -10,9 +10,11 @@ import useBlog from "../hooks/useBlog";
 import { BlogCardProps } from "../utils/Types";
 import EditBlog from "../components/EditBlog";
 import { useGlobalContext } from "../GlobalContext";
+import useAOS from "../hooks/useAOS";
 
 export default function BlogList() {
   const { role } = useGlobalContext();
+  useAOS({ duration: 500, easing: "ease-in-out" });
 
   const {
     blogData,
@@ -57,10 +59,11 @@ export default function BlogList() {
         <section className="relative flex justify-center items-center mt-10 gap-20">
           <div className="w-[95%] sm:w-[90%] flex flex-col justify-center items-center gap-5">
             <div className="relative flex flex-col justify-center items-center w-full col-span-3 sm:col-span-3 md:col-span-2">
-              <Heading text="Blog Posts" customClass="mb-4 text-center" />
+              <Heading text="Blog Posts" customClass="mb-4 text-center" animation="fade-right" />
               <SubHeading
                 text="Discover the latest articles, tips, and stories from our blog."
                 customClass="text-center text-black/60"
+                animation="fade-left"
               />
             </div>
             {role === "admin" && (
@@ -81,9 +84,9 @@ export default function BlogList() {
               ) : error ? (
                 <p className="text-red-500 text-center">{error}</p>
               ) : (
-                currentPosts.map((post, index) => (
+                currentPosts.map((post) => (
                   <BlogCard
-                    key={index}
+                    key={post.id}
                     id={post.id}
                     author={post.author}
                     date={post.date}
@@ -92,6 +95,8 @@ export default function BlogList() {
                     title={post.title}
                     handleDeleteItem={() => deleteExistingBlog(post.id)}
                     handleOpenEditForm={() => handleOpenEditForm(post)}
+                    animation="fade-up"
+                    data-aos-delay="100"
                   />
                 ))
               )}
@@ -111,7 +116,7 @@ export default function BlogList() {
                 <Heading text="Other Recipes" />
                 <RecipeSideList />
               </div>
-              <GreenCard />
+              <GreenCard animation="fade-left" data-aos-delay="200" />
             </div>
           </div>
         </section>
