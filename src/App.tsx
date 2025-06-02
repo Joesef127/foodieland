@@ -77,7 +77,7 @@ function App() {
   }
 
   return (
-    <div className="pt-10 pb-40 overflow-y-scroll relative inter">
+    <div className="pt-10 pb-40 overflow-y-scroll overflow-x-hidden relative inter">
       <HeroSection />
 
       <section className="flex justify-center items-center mt-40">

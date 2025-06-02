@@ -7,7 +7,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="flex justify-center items-center sticky top-0 z-[50] backdrop-blur-3xl inter border-b border-gray-200 bg-white">
+    <header className="flex justify-center items-center sticky top-0 z-[50] backdrop-blur-3xl inter border-b border-black/20 bg-white">
       <div className="py-8 w-[90%] max-w-[1440px] flex gap-2.5 justify-between items-center">
         <figure>
           <img
