@@ -82,10 +82,7 @@ function App() {
 
       <section className="flex justify-center items-center mt-40">
         <div className="w-[95%] sm:w-[90%] flex flex-col gap-18">
-          <div
-            className="flex justify-between items-center mb-10"
-            
-          >
+          <div className="flex justify-between items-center mb-10">
             <Heading text="Categories" animation="fade-right" />
 
             <Button
@@ -113,11 +110,15 @@ function App() {
       <section className="relative flex justify-center items-center mt-40 gap-20">
         <div className="w-[95%] sm:w-[90%] flex flex-col justify-center items-center gap-18">
           <div className="flex flex-col justify-between items-center">
-            <Heading text="Simple and tasty recipes" customClass="mb-6" animation="fade-left" />
+            <Heading
+              text="Simple and tasty recipes"
+              customClass="mb-6"
+              animation="fade-left"
+            />
             <SubHeading
               text="Explore a variety of delicious recipes that we offer. We have a
             variety of recipes that are easy to make and delicious to eat."
-              customClass="text-center text-gray-500" 
+              customClass="text-center text-gray-500"
               animation="fade-right"
             />
           </div>
@@ -183,7 +184,7 @@ function App() {
               text="Learn More"
               textColor="text-white"
               customClass="bg-black"
-              animation="fade-up" 
+              animation="fade-up"
             />
           </div>
 
@@ -197,9 +198,9 @@ function App() {
             <img
               src={happy_chef}
               alt="Happy chef with fruits"
-              className="-ml-28"
-            data-aos="fade-left"
-            data-aos-delay="300"
+              className="-ml-12 lg:-ml-28"
+              data-aos="fade-left"
+              data-aos-delay="300"
             />
             <StickyObject image={tomato} customClass=" bottom-1/5 -left-5" />
             <StickyObject image={beef} customClass="top-1 left-1/10" />

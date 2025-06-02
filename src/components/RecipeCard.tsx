@@ -6,6 +6,7 @@ import heart_blank from "../assets/icons/heart_blank.svg";
 import { Link } from "react-router-dom";
 import { RecipeCardType } from "../utils/Types";
 import React from "react";
+import { useGlobalContext } from "../GlobalContext";
 
 const Recipe = React.memo(
   ({
@@ -22,9 +23,7 @@ const Recipe = React.memo(
     handleToggleFavorite,
     animation,
   }: RecipeCardType) => {
-
-    
-
+    const { role } = useGlobalContext();
 
     return (
       <div
@@ -40,7 +39,7 @@ const Recipe = React.memo(
           <figure className="relative overflow-hidden rounded-2xl max w-full md:h-36 max-h-48 xl:h-48">
             <div
               className="absolute top-4 right-4 p-2.5 rounded-full bg-white z-10"
-              onClick={handleToggleFavorite}
+              onClick={role === "admin" ? handleToggleFavorite : undefined}
             >
               <img src={isFavorite ? heart_fill : heart_blank} alt="fav" />
             </div>
@@ -68,12 +67,14 @@ const Recipe = React.memo(
           <Badge icon={forkKnife} text={category} />
         </div>
 
-        <div className="absolute bottom-4 right-2">
-          <Dropdown
-            handleDeleteItem={handleDeleteItem || (() => {})}
-            handleOpenEditForm={handleOpenEditForm || (() => {})}
-          />
-        </div>
+        {role === "admin" && (
+          <div className="absolute bottom-4 right-2">
+            <Dropdown
+              handleDeleteItem={handleDeleteItem || (() => {})}
+              handleOpenEditForm={handleOpenEditForm || (() => {})}
+            />
+          </div>
+        )}
       </div>
     );
   }

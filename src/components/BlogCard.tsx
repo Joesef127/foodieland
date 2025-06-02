@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { BlogCardProps } from "../utils/Types";
 import { Dropdown } from "../utils/Utils";
 import { formatDate } from "../utils/utilFunctions";
+import { useGlobalContext } from "../GlobalContext";
 
 export default function BlogCard({
   id,
@@ -13,6 +14,8 @@ export default function BlogCard({
   handleDeleteItem,
   handleOpenEditForm,
 }: BlogCardProps) {
+  const { role } = useGlobalContext();
+
   return (
     <div
       key={id}
@@ -44,12 +47,14 @@ export default function BlogCard({
         </p>
       </div>
 
-      <div className="absolute bottom-[1%] sm:bottom-[45%] right-2">
-        <Dropdown
-          handleDeleteItem={handleDeleteItem || (() => {})}
-          handleOpenEditForm={handleOpenEditForm || (() => {})}
-        />
-      </div>
+      {role === "admin" && (
+        <div className="absolute bottom-[1%] sm:bottom-[45%] right-2">
+          <Dropdown
+            handleDeleteItem={handleDeleteItem || (() => {})}
+            handleOpenEditForm={handleOpenEditForm || (() => {})}
+          />
+        </div>
+      )}
     </div>
   );
 }

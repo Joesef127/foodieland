@@ -7,8 +7,11 @@ import SelectDropdown from "../utils/SelectDropdown";
 import useRecipe from "../hooks/useRecipe";
 import EditRecipeForm from "../components/EditRecipe";
 import AddRecipeForm from "../components/AddRecipe";
+import { useGlobalContext } from "../GlobalContext";
 
 export default function Recipes() {
+  const { role } = useGlobalContext();
+
   const {
     recipeData,
     isLoading,
@@ -155,10 +158,12 @@ export default function Recipes() {
             <div className="text-center text-red-500">{error}</div>
           ) : currentRecipes.length > 0 ? (
             <div className="flex flex-col justify-center items-center">
-              <Button
-                text={"Add New Recipe"}
-                customFunction={handleOpenAddForm}
-              />
+              {role === "admin" && (
+                <Button
+                  text={"Add New Recipe"}
+                  customFunction={handleOpenAddForm}
+                />
+              )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-7xl gap-2.5 mt-10">
                 {currentRecipes.map((recipe) => (

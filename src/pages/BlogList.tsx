@@ -9,8 +9,11 @@ import AddBlog from "../components/AddBlog";
 import useBlog from "../hooks/useBlog";
 import { BlogCardProps } from "../utils/Types";
 import EditBlog from "../components/EditBlog";
+import { useGlobalContext } from "../GlobalContext";
 
 export default function BlogList() {
+  const { role } = useGlobalContext();
+
   const {
     blogData,
     isLoading,
@@ -60,11 +63,13 @@ export default function BlogList() {
                 customClass="text-center text-black/60"
               />
             </div>
-            <Button
-              text={"Add New Blog"}
-              customFunction={handleOpenAddBlog}
-              customClass="mt-10"
-            />
+            {role === "admin" && (
+              <Button
+                text={"Add New Blog"}
+                customFunction={handleOpenAddBlog}
+                customClass="mt-10"
+              />
+            )}
           </div>
         </section>
 
