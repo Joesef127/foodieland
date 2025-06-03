@@ -44,7 +44,7 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="relative w-full flex flex-col sm:flex-row justify-center items-center gap-4 border-t border-gray-200 pt-4 mt-4">
+        <div className="relative w-full flex flex-col sm:flex-row justify-center items-center gap-4 border-t border-black/30 pt-4 mt-4">
           <div className="text-center md:text-left text-sm md:text-base text-gray-500">
             <p>
               &copy; {currentYear}
