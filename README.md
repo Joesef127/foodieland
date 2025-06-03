@@ -1,5 +1,3 @@
-This is a fantastic start to a README\! You've provided all the essential information. Let's format it to make it more visually appealing and user-friendly, following common README conventions.
-
 -----
 
 # Foodieland
