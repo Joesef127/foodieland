@@ -98,11 +98,11 @@ export default function Blog() {
               <p className="mb-6 text-gray-700 text-center text-sm sm:text-base" data-aos="fade-up" data-aos-delay="300">
                 {blog.excerpt}
               </p>
-              <figure className="w-full overflow-hidden rounded-3xl max-h-[507px]" data-aos="fade-up" data-aos-delay="400">
+              <figure className="w-full flex justify-center items-center overflow-hidden rounded-3xl max-h-[507px]" data-aos="fade-up" data-aos-delay="400">
                 <img
                   src={blog.image}
                   alt={blog.image}
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full"
                 />
               </figure>
               <div className="grid sm:grid-cols-4 gap-6 mt-10">
